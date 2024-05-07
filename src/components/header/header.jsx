@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { isOnState } from "./atoms";
+import { isHeaderState } from "../../atom";
 
 import styled from "styled-components";
 import Logo from "../../imgs/eng_logo.svg";
@@ -46,19 +46,38 @@ const ReturnBtn = styled.button`
   justify-content: center;
 `;
 
-export default function header() {
-  const [isOn, setisOn] = useRecoilState(isOnState);
+const LoginBtn = styled.button`
+  border: 0;
+  background-color: white;
+`;
 
-  const toggleHandler = () => {
-    // isOn의 상태를 변경하는 메소드를 구현
-    setisOn(!isOn);
-  };
+function title(isHeader) {
+  switch (isHeader) {
+    case "test":
+      return <Title>맵기 레벨 검사</Title>;
+    default:
+      return "";
+  }
+}
+
+function logReturnBtn(isHeader) {
+  switch (isHeader) {
+    case "test":
+      return <ReturnBtn>처음으로</ReturnBtn>;
+    case "main":
+      return <LoginBtn>로그인</LoginBtn>;
+    default:
+      return "";
+  }
+}
+
+export default function header(isHeader) {
   return (
     <StyleContainer>
       <TitleContainer>
         <EngLogo src={Logo}></EngLogo>
-        <Title>맵기 레벨 검사</Title>
-        <ReturnBtn>처음으로</ReturnBtn>
+        {title(isHeader)}
+        {logReturnBtn("main")}
       </TitleContainer>
     </StyleContainer>
   );
