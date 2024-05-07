@@ -1,6 +1,8 @@
 import { atom } from "recoil";
 
-export const isHeaderState = atom({
-  key: "isHeader",
-  default: 0,
+export const headerState = atom({
+  key: "headerState",
+  default: {
+    header: "result",
+  },
 });

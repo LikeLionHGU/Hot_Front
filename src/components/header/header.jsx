@@ -1,6 +1,3 @@
-import { useRecoilState } from "recoil";
-import { isHeaderState } from "../../atom";
-
 import styled from "styled-components";
 import Logo from "../../imgs/eng_logo.svg";
 
