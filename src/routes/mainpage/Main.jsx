@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Header from "../../components/header/header";
 import { ReactComponent as LogoImg } from "../../imgs/textlogo.svg";
 import { ReactComponent as Ment } from "../../imgs/mention.svg";
 import { ReactComponent as TestBtn } from "../../imgs/testbutton.svg";
@@ -9,10 +10,10 @@ const StyleContainer = styled.div`
   height: 100%;
 `;
 
-const Header = styled.div`
-  height: 70px;
-  display: flex;
-`;
+// const Header = styled.div`
+//   height: 70px;
+//   display: flex;
+// `;
 
 const Logo = styled.div`
   margin-top: 25px;
@@ -57,12 +58,12 @@ const BtnBlock = styled.div`
 export default function Main() {
   return (
     <StyleContainer>
-      <Header>
-        <Logo>
+      <Header />
+      {/* <Logo>
           <LogoImg></LogoImg>
         </Logo>
-        <LogIn>로그인</LogIn>
-      </Header>
+        <LogIn>로그인</LogIn> */}
+      {/* </Header> */}
       <Body>
         <Mention>
           <Ment>
