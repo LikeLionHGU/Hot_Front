@@ -73,7 +73,7 @@ export default function header(isHeader) {
     <StyleContainer>
       <TitleContainer>
         <EngLogo src={Logo}></EngLogo>
-        {title(isHeader)}
+        {title("main")}
         {logReturnBtn("main")}
       </TitleContainer>
     </StyleContainer>
