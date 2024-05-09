@@ -10,7 +10,11 @@
     "react-dom": "^18.3.1",
     "react-kakao-maps-sdk": "^1.1.26",
     "react-scripts": "5.0.1",
+<<<<<<< HEAD
     "styled-component": "^2.8.0",
+=======
+    "recoil": "^0.7.7",
+>>>>>>> main
     "styled-components": "^6.1.9",
     "web-vitals": "^2.1.4"
   },
