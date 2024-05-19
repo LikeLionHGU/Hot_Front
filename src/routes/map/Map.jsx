@@ -1,5 +1,6 @@
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 
 import CharacterLogo from "../../imgs/characterLogo.svg";
 
@@ -26,26 +27,21 @@ const Character = styled.img`
   height: 48px;
 `;
 
-const Maptest = styled(Map)`
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
 export default function Slider() {
   return (
     <StyleContainer>
       <Sidebar>
         <Character src={CharacterLogo} alt="캐릭터 로고" />
       </Sidebar>
-      <Maptest
-        center={{ lat: 33.5563, lng: 126.79581 }}
+
+      <Map
+        center={{ lat: 33.450701, lng: 126.570667 }}
         style={{ width: "100vw", height: "100vh" }}
       >
         <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
           <div style={{ color: "#000" }}>Hello World!</div>
         </MapMarker>
-      </Maptest>
+      </Map>
     </StyleContainer>
   );
 }
