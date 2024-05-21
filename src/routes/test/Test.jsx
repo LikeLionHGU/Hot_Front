@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import Header from "../../components/header/header";
+import Result from "../TestResult";
+import Loading from "../loading/Loading";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as Img1 } from "../../imgs/testimg1.svg";
 import { ReactComponent as Img2 } from "../../imgs/testimg2.svg";
 import { ReactComponent as Img3 } from "../../imgs/testimg3.svg";
@@ -93,8 +96,12 @@ const ResultBtn = styled.button`
     cursor: not-allowed;
   `}
 `;
-
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 export default function Main() {
+  const [loading, setLoading] = useState(false);
   const [selectedNum, setselectedNum] = useState([
     null,
     null,
@@ -139,44 +146,66 @@ export default function Main() {
 
   const isAllQuestionsAnswered = selectedNum.every((size) => size !== null);
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/result");
+    }, 4000); // 2초 동안 로딩 화면
+  };
+
   return (
     <StyleContainer>
-      <Header></Header>
-      {[...Array(13)].map((_, questionIndex) => (
-        <StyleQuestion key={questionIndex}>
-          <QuestionBox>
-            <QText>{question[questionIndex]}</QText>
-          </QuestionBox>
-          <AnswerBox>
-            <Agree>미동의</Agree>
-            {sizes.map((size, index) => (
-              <Answer
-                key={size}
-                style={{
-                  width: `${calculateSize(index)}px`,
-                  height: `${calculateSize(index)}px`,
-                  borderRadius: "50%",
-                  border: `2px solid #F6B95B`,
-                  backgroundColor:
-                    selectedNum[questionIndex] === size ? `#F6B95B` : `white`,
-                }}
-                onClick={() => handleSelect(questionIndex, size)}
-              ></Answer>
-            ))}
-            <Agree>동의</Agree>
-          </AnswerBox>
-        </StyleQuestion>
-      ))}
-      <Image1>
-        <Img1 />
-      </Image1>
-      <Image2>
-        <Img2 />
-      </Image2>
-      <Image3>
-        <Img3 />
-      </Image3>
-      <ResultBtn disabled={!isAllQuestionsAnswered}>결과 보러가기</ResultBtn>
+      <Header />
+      {loading ? (
+        <LoadingContainer>
+          <Loading />
+        </LoadingContainer>
+      ) : (
+        <>
+          {[...Array(13)].map((_, questionIndex) => (
+            <StyleQuestion key={questionIndex}>
+              <QuestionBox>
+                <QText>{question[questionIndex]}</QText>
+              </QuestionBox>
+              <AnswerBox>
+                <Agree>미동의</Agree>
+                {sizes.map((size, index) => (
+                  <Answer
+                    key={size}
+                    style={{
+                      width: `${calculateSize(index)}px`,
+                      height: `${calculateSize(index)}px`,
+                      borderRadius: "50%",
+                      border: `2px solid #F6B95B`,
+                      backgroundColor:
+                        selectedNum[questionIndex] === size
+                          ? `#F6B95B`
+                          : `white`,
+                    }}
+                    onClick={() => handleSelect(questionIndex, size)}
+                  ></Answer>
+                ))}
+                <Agree>동의</Agree>
+              </AnswerBox>
+            </StyleQuestion>
+          ))}
+          <Image1>
+            <Img1 />
+          </Image1>
+          <Image2>
+            <Img2 />
+          </Image2>
+          <Image3>
+            <Img3 />
+          </Image3>
+          <ResultBtn disabled={!isAllQuestionsAnswered} onClick={handleClick}>
+            결과 보러가기
+          </ResultBtn>
+        </>
+      )}
     </StyleContainer>
   );
 }
