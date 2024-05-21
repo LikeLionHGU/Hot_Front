@@ -1,6 +1,8 @@
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../components/header/header";
-import { ReactComponent as LogoImg } from "../../imgs/textlogo.svg";
+import Test from "../test/Test";
+// import { ReactComponent as LogoImg } from "../../imgs/textlogo.svg";
 import { ReactComponent as Ment } from "../../imgs/mention.svg";
 import { ReactComponent as TestBtn } from "../../imgs/testbutton.svg";
 import { ReactComponent as MapBtn } from "../../imgs/mapbutton.svg";
@@ -15,19 +17,7 @@ const StyleContainer = styled.div`
 //   display: flex;
 // `;
 
-const Logo = styled.div`
-  margin-top: 25px;
-`;
-
-const LogIn = styled.button`
-  margin-top: 0px;
-  border: none;
-  background-color: transparent;
-`;
-
-const Body = styled.div`
-  width: 100%;
-`;
+const Body = styled.div``;
 
 const Mention = styled.div`
   display: block;
@@ -56,6 +46,16 @@ const BtnBlock = styled.div`
 // `;
 
 export default function Main() {
+  const navigate = useNavigate();
+
+  function toTest() {
+    navigate("/test");
+  }
+
+  function toMap() {
+    navigate("/map");
+  }
+
   return (
     <StyleContainer>
       <Header />
@@ -75,9 +75,9 @@ export default function Main() {
         </Mention>
         <Btn>
           <BtnBlock>
-            <TestBtn />
+            <TestBtn onClick={toTest} />
           </BtnBlock>
-          <MapBtn />
+          <MapBtn onClick={toMap} />
         </Btn>
       </Body>
     </StyleContainer>
