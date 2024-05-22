@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import Header from "../components/header/header";
 import styled from "styled-components";
 
@@ -66,6 +68,11 @@ const BackImage = styled(Image)`
 `;
 
 export default function TestResult() {
+  const navigate = useNavigate();
+
+  function toMap() {
+    navigate("/map");
+  }
   return (
     <>
       <Header />
@@ -77,7 +84,7 @@ export default function TestResult() {
           </AboveLeft>
           <AboveRight>
             <div>캐릭터 설명</div>
-            <button>지도 보러가기</button>
+            <button onClick={toMap}>지도 보러가기</button>
           </AboveRight>
         </Above>
         <div>다른 캐릭터들 보러 가기</div>
