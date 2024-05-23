@@ -4,6 +4,8 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
 import CharacterLogo from "../../imgs/characterLogo.svg";
+import MarkerImage from "../../imgs/marker.svg";
+import InfoImage from "../../imgs/infobox.svg";
 
 const StyleContainer = styled.div`
   overflow: hidden;
@@ -26,6 +28,21 @@ const Sidebar = styled.div`
 const Character = styled.img`
   width: 28px;
   height: 48px;
+`;
+
+const MarkerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const InfoBox = styled.img`
+  margin-bottom: 5px; /* Adjust the space between InfoBox and Marker */
+`;
+
+const MarkerImageStyled = styled.img`
+  width: 22px;
+  height: 32px;
 `;
 
 export default function MapContainer() {
@@ -60,8 +77,29 @@ export default function MapContainer() {
       </Sidebar>
 
       <Map center={position} style={{ width: "100vw", height: "100vh" }}>
-        <MapMarker position={position}>
-          <div style={{ color: "#000" }}>여기에 계신가요?!</div>
+        <MapMarker
+          position={position}
+          image={{
+            size: {
+              width: 64,
+              height: 69,
+            }, // 마커이미지의 크기입니다
+            options: {
+              offset: {
+                x: 27,
+                y: 69,
+              }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+            },
+          }}
+        >
+          <MarkerWrapper>
+            {/* <InfoBox src={InfoImage} alt="InfoBox" /> */}
+            <MarkerImageStyled
+              src={MarkerImage}
+              alt="Marker"
+              position={position}
+            />
+          </MarkerWrapper>
         </MapMarker>
       </Map>
     </StyleContainer>
