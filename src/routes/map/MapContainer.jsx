@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
-import SideBar from "../map/sidebar/SideBar.jsx";
+import SideBar from "../map/sidebar/Sidebar.jsx";
 
 import MarkerImage from "../../imgs/marker.svg";
 import InfoImage from "../../imgs/infobox.svg";
