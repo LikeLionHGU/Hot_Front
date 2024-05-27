@@ -4,6 +4,7 @@ import Logo from "../../imgs/eng_logo.svg";
 const StyleContainer = styled.div`
   width: 100%;
   height: 70px;
+  background-color: white;
   box-shadow: 0px 1px 5px #c0c0c0;
 
   display: flex;
