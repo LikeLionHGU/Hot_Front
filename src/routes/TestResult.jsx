@@ -59,8 +59,8 @@ const AboveRight = styled.div`
 `;
 
 const MapBtn = styled.button`
-  width: 270px;
-  height: 60px;
+  width: 312px;
+  height: 68px;
 
   border: none;
   border-radius: 8px;
