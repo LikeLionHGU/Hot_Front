@@ -1,14 +1,22 @@
 // import logo from './logo.svg';
 // import "./App.css";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Main from "./routes/mainpage/Main";
-import Map from "./routes/map/Map";
+import Test from "./routes/test/Test";
+import Result from "./routes/TestResult";
+import Map from "./routes/map/MapContainer";
+import MapContainer from "./routes/map/MapContainer";
 
 function App() {
   return (
-    <div className="App">
-      <Main />
-      {/* <Map /> */}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/test" element={<Test />}></Route>
+        <Route path="/result" element={<Result />}></Route>
+        <Route path="/map" element={<MapContainer />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

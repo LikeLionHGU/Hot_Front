@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import Header from "../components/header/header";
 import styled from "styled-components";
 import Fade from "../components/fade";
@@ -125,6 +127,11 @@ const BackImage = styled(Image)`
 `;
 
 export default function TestResult() {
+  const navigate = useNavigate();
+
+  function toMap() {
+    navigate("/map");
+  }
   return (
     <>
       <Header />
