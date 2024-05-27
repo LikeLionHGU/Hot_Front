@@ -153,7 +153,7 @@ export default function TestResult() {
               <br />
               어떤 음식이든 마법으로 맵게 만듭니다!
             </div>
-            <MapBtn>지도 보러가기</MapBtn>
+            <MapBtn onClick={toMap}>지도 보러가기</MapBtn>
           </AboveRight>
         </Above>
         <div style={{ margin: "13px" }}>다른 캐릭터들 보러 가기</div>
