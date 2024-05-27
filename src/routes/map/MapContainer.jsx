@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
-import CharacterLogo from "../../imgs/characterLogo.svg";
+import SideBar from "../map/sidebar/SideBar.jsx";
+
 import MarkerImage from "../../imgs/marker.svg";
 import InfoImage from "../../imgs/infobox.svg";
 
@@ -17,18 +18,18 @@ const StyleContainer = styled.div`
   display: flex;
 `;
 
-const Sidebar = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+// const Sidebar = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
 
-  width: 60px;
-`;
+//   width: 60px;
+// `;
 
-const Character = styled.img`
-  width: 28px;
-  height: 48px;
-`;
+// const Character = styled.img`
+//   width: 28px;
+//   height: 48px;
+// `;
 
 const MarkerWrapper = styled.div`
   display: flex;
@@ -72,33 +73,27 @@ export default function MapContainer() {
 
   return (
     <StyleContainer>
-      <Sidebar>
-        <Character src={CharacterLogo} alt="캐릭터 로고" />
-      </Sidebar>
+      <SideBar></SideBar>
 
       <Map center={position} style={{ width: "100vw", height: "100vh" }}>
         <MapMarker
           position={position}
           image={{
+            src: "https://raw.githubusercontent.com/LikeLionHGU/Hot_Front/6d359b4c9a92ef99cf7abe47149b0ffadba76aaf/src/imgs/marker.svg",
             size: {
-              width: 64,
-              height: 69,
+              width: 22,
+              height: 32,
             }, // 마커이미지의 크기입니다
             options: {
               offset: {
-                x: 27,
-                y: 69,
-              }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                x: 10,
+                y: 60,
+              },
             },
           }}
         >
           <MarkerWrapper>
             {/* <InfoBox src={InfoImage} alt="InfoBox" /> */}
-            <MarkerImageStyled
-              src={MarkerImage}
-              alt="Marker"
-              position={position}
-            />
           </MarkerWrapper>
         </MapMarker>
       </Map>
