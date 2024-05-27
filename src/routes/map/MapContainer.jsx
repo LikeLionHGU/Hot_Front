@@ -1,12 +1,45 @@
 /*global kakao*/
 import React, { useState, useEffect } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, useMap, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
-import SideBar from "../map/sidebar/SideBar.jsx";
+import SideBar from "../../components/SideBar.jsx";
 
 import MarkerImage from "../../imgs/marker.svg";
 import InfoImage from "../../imgs/infobox.svg";
+
+const data = [
+  {
+    content: <div style={{ color: "#000" }}>그레이스홀</div>,
+    latlng: { lat: 36.10240728030978, lng: 129.3819895660373 },
+  },
+
+  {
+    content: <div style={{ color: "#000" }}>닭칼국수</div>,
+    latlng: { lat: 36.09931365660396, lng: 129.39997835387143 },
+  },
+  {
+    content: <div style={{ color: "#000" }}>더가든파티</div>,
+    latlng: { lat: 36.0111163119898, lng: 129.363948229105 },
+  },
+  {
+    content: <div style={{ color: "#000" }}>동순관</div>,
+    latlng: { lat: 36.0111163119898, lng: 129.363948229105 },
+  },
+];
+
+function makeOverListener(map, marker, infowindow) {
+  return function () {
+    infowindow.open(map, marker);
+  };
+}
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다
+function makeOutListener(infowindow) {
+  return function () {
+    infowindow.close();
+  };
+}
 
 const StyleContainer = styled.div`
   overflow: hidden;
@@ -47,7 +80,10 @@ const MarkerImageStyled = styled.img`
 `;
 
 export default function MapContainer() {
-  const [position, setPosition] = useState({ lat: 33.450701, lng: 126.570667 });
+  const [currentPosition, setCurrentPosition] = useState({
+    lat: 33.450701,
+    lng: 126.570667,
+  });
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -55,7 +91,7 @@ export default function MapContainer() {
         (pos) => {
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
-          setPosition({ lat, lng });
+          setCurrentPosition({ lat, lng });
         },
         () => {
           alert("위치 정보를 가져오는데 실패했습니다.");
@@ -71,13 +107,30 @@ export default function MapContainer() {
     }
   }, []);
 
+  const EventMarkerContainer = ({ position, content }) => {
+    const map = useMap();
+    const [isVisible, setIsVisible] = useState(false);
+    console.log(position);
+    return (
+      <MapMarker
+        position={position} // 마커를 표시할 위치
+        // @ts-ignore
+        onClick={(marker) => map.panTo(marker.getPosition())}
+        onMouseOver={() => setIsVisible(true)}
+        onMouseOut={() => setIsVisible(false)}
+      >
+        {isVisible && content}
+      </MapMarker>
+    );
+  };
+
   return (
     <StyleContainer>
-      <SideBar></SideBar>
+      <SideBar />
 
-      <Map center={position} style={{ width: "100vw", height: "100vh" }}>
+      <Map center={currentPosition} style={{ width: "100vw", height: "100vh" }}>
         <MapMarker
-          position={position}
+          position={currentPosition}
           image={{
             src: "https://raw.githubusercontent.com/LikeLionHGU/Hot_Front/6d359b4c9a92ef99cf7abe47149b0ffadba76aaf/src/imgs/marker.svg",
             size: {
@@ -96,6 +149,13 @@ export default function MapContainer() {
             {/* <InfoBox src={InfoImage} alt="InfoBox" /> */}
           </MarkerWrapper>
         </MapMarker>
+        {data.map((value) => (
+          <EventMarkerContainer
+            key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
+            position={value.latlng}
+            content={value.content}
+          />
+        ))}
       </Map>
     </StyleContainer>
   );
