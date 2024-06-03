@@ -27,6 +27,8 @@ import SlibiFairyBack from "../imgs/silbifairy_back.svg";
 import DownArrow from "../imgs/downArrow.svg";
 import UpArrow from "../imgs/upArrow.svg";
 
+import "../assets/font.css";
+
 const StyleContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,6 +58,8 @@ const AboveRight = styled.div`
   margin-left: 80px;
   margin-top: 30px;
   margin-bottom: 10px;
+
+  font-family: NanumVariable;
 `;
 
 const MapBtn = styled.button`
