@@ -1,12 +1,9 @@
-/*global kakao*/
 import React, { useState, useEffect } from "react";
 import { Map, useMap, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
 import SideBar from "../../components/SideBar.jsx";
-
-import MarkerImage from "../../imgs/marker.svg";
-import InfoImage from "../../imgs/infobox.svg";
+// import Marker from "../../imgs/marker.svg";
 
 const data = [
   {
@@ -28,19 +25,6 @@ const data = [
   },
 ];
 
-function makeOverListener(map, marker, infowindow) {
-  return function () {
-    infowindow.open(map, marker);
-  };
-}
-
-// 인포윈도우를 닫는 클로저를 만드는 함수입니다
-function makeOutListener(infowindow) {
-  return function () {
-    infowindow.close();
-  };
-}
-
 const StyleContainer = styled.div`
   overflow: hidden;
   body {
@@ -49,34 +33,6 @@ const StyleContainer = styled.div`
   }
 
   display: flex;
-`;
-
-// const Sidebar = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-
-//   width: 60px;
-// `;
-
-// const Character = styled.img`
-//   width: 28px;
-//   height: 48px;
-// `;
-
-const MarkerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const InfoBox = styled.img`
-  margin-bottom: 5px; /* Adjust the space between InfoBox and Marker */
-`;
-
-const MarkerImageStyled = styled.img`
-  width: 22px;
-  height: 32px;
 `;
 
 export default function MapContainer() {
@@ -118,6 +74,16 @@ export default function MapContainer() {
         onClick={(marker) => map.panTo(marker.getPosition())}
         onMouseOver={() => setIsVisible(true)}
         onMouseOut={() => setIsVisible(false)}
+        image={{
+          src: "https://raw.githubusercontent.com/LikeLionHGU/Hot_Front/6d359b4c9a92ef99cf7abe47149b0ffadba76aaf/src/imgs/marker.svg",
+          size: { width: 22, height: 32 }, // 마커이미지의 크기입니다
+          options: {
+            offset: {
+              x: 11,
+              y: 32,
+            },
+          },
+        }}
       >
         {isVisible && content}
       </MapMarker>
@@ -129,7 +95,7 @@ export default function MapContainer() {
       <SideBar />
 
       <Map center={currentPosition} style={{ width: "100vw", height: "100vh" }}>
-        <MapMarker
+        {/* <MapMarker
           position={currentPosition}
           image={{
             src: "https://raw.githubusercontent.com/LikeLionHGU/Hot_Front/6d359b4c9a92ef99cf7abe47149b0ffadba76aaf/src/imgs/marker.svg",
@@ -144,11 +110,7 @@ export default function MapContainer() {
               },
             },
           }}
-        >
-          <MarkerWrapper>
-            {/* <InfoBox src={InfoImage} alt="InfoBox" /> */}
-          </MarkerWrapper>
-        </MapMarker>
+        ></MapMarker> */}
         {data.map((value) => (
           <EventMarkerContainer
             key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
