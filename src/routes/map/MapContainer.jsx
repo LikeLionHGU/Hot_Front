@@ -23,24 +23,27 @@ function FirePoints({ score }) {
   );
 }
 
-const data = [
+const regdata = [
   {
-    content: <div style={{ color: "#000" }}>그레이스홀</div>,
-    latlng: { lat: 36.10240728030978, lng: 129.3819895660373 },
+    storeName: "그레이스홀",
+
+    yaxis: 36.10240728030978,
+    xaxis: 129.3819895660373,
+    // latlng: { lat: 36.10240728030978, lng: 129.3819895660373 },
   },
 
-  {
-    content: <div style={{ color: "#000" }}>닭칼국수</div>,
-    latlng: { lat: 36.09931365660396, lng: 129.39997835387143 },
-  },
-  {
-    content: <div style={{ color: "#000" }}>더가든파티</div>,
-    latlng: { lat: 36.0111163119898, lng: 129.363948229105 },
-  },
-  {
-    content: <div style={{ color: "#000" }}>동순관</div>,
-    latlng: { lat: 36.0111163119898, lng: 129.363948229105 },
-  },
+  // {
+  //   storeName: "닭칼국수",
+  //   // latlng: { lat: 36.09931365660396, lng: 129.39997835387143 },
+  // },
+  // {
+  //   storeName: "더가든파티",
+  //   // latlng: { lat: 36.0111163119898, lng: 129.363948229105 },
+  // },
+  // {
+  //   storeName: "동순관",
+  //   // latlng: { lat: 36.0111163119898, lng: 129.363948229105 },
+  // },
 ];
 
 const StyleContainer = styled.div`
@@ -58,6 +61,11 @@ const score = 3;
 export default function MapContainer() {
   // 인포윈도우 Open 여부를 저장
   // 현 위치 찍기. 일단 카카오 본사 위치
+
+  const [data, setRestaurant] = useState([]);
+
+  console.log(data);
+
   const [currentPosition, setCurrentPosition] = useState({
     lat: 33.450701,
     lng: 126.570667,
@@ -70,6 +78,14 @@ export default function MapContainer() {
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
           setCurrentPosition({ lat, lng });
+
+          const url = `http://223.p-e.kr:8080/get/stores?x=${lng}&y=${lat}&radius=1250`;
+          fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              setRestaurant(data);
+            })
+            .catch((e) => setRestaurant(regdata));
         },
         () => {
           alert("위치 정보를 가져오는데 실패했습니다.");
@@ -85,7 +101,7 @@ export default function MapContainer() {
     }
   }, []);
 
-  const EventMarkerContainer = ({ position, content }) => {
+  const EventMarkerContainer = ({ position, storeName }) => {
     const map = useMap();
     const [isOpen, setIsOpen] = useState(false);
     const handleIsOpen = () => {
@@ -101,8 +117,9 @@ export default function MapContainer() {
         // onMouseOut={() => setIsVisible(false)}
 
         onClick={(marker) => {
-          map.panTo(marker.getPosition());
-          handleIsOpen();
+          map.panTo(marker.getPosition()); // 지도 중앙을 마커
+          console.log(marker.getPosition());
+          handleIsOpen(); // 열고 닫는거
         }}
         image={{
           src: "https://raw.githubusercontent.com/LikeLionHGU/Hot_Front/6d359b4c9a92ef99cf7abe47149b0ffadba76aaf/src/imgs/marker.svg",
@@ -117,9 +134,7 @@ export default function MapContainer() {
       >
         {isOpen && (
           <>
-            {content}
-            {/* <img src={firePoint} alt="불점" />
-            <img src={nonFirePoint} alt="불점" /> */}
+            <div>{storeName}</div>
             <FirePoints score={score} />
             <div>리뷰 : 00</div>
             <div>주소...</div>
@@ -152,9 +167,9 @@ export default function MapContainer() {
         ></MapMarker> */}
         {data.map((value) => (
           <EventMarkerContainer
-            key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
-            position={value.latlng}
-            content={value.content}
+            key={`EventMarkerContainer-${value.xaxis}-${value.yaxis}`}
+            position={{ lng: value.xaxis, lat: value.yaxis }}
+            storeName={value.storeName}
           />
         ))}
       </Map>
