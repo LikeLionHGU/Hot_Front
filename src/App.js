@@ -7,7 +7,7 @@ import Result from "./routes/TestResult";
 import MyPage from "./routes/mypage/MyPage";
 import Map from "./routes/map/MapContainer";
 import MapContainer from "./routes/map/MapContainer";
-import RamenTest from "./routes/test/RamenTest";
+import RamenTest from "./routes/test/RamenTest.jsx";
 
 function App() {
   return (
