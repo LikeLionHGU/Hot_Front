@@ -17,11 +17,12 @@ const LoadingImg = styled.div`
   align-items: center;
 `;
 
-const LoadingText = styled.h2`
-  font-size: 26px;
+const LoadingText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 26px;
+  font-family: Dream5;
 `;
 
 export default function Loading() {
@@ -30,7 +31,7 @@ export default function Loading() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prevImage) => (prevImage % 4) + 1);
-    }, 350);
+    }, 500);
 
     return () => clearInterval(interval);
   }, []);
