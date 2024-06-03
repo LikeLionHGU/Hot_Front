@@ -3,7 +3,25 @@ import { Map, useMap, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
 import SideBar from "../../components/SideBar.jsx";
-// import Marker from "../../imgs/marker.svg";
+import firePoint from "../../imgs/firePoint.svg";
+import nonFirePoint from "../../imgs/nonFirePoint.svg";
+
+function FirePoints({ score }) {
+  const totalPoints = 5;
+  const firePoints = Array(score).fill(firePoint);
+  const nonFirePoints = Array(totalPoints - score).fill(nonFirePoint);
+
+  return (
+    <div>
+      {firePoints.map((src, index) => (
+        <img key={`fire-${index}`} src={src} alt="불점" />
+      ))}
+      {nonFirePoints.map((src, index) => (
+        <img key={`nonfire-${index}`} src={src} alt="비 불점" />
+      ))}
+    </div>
+  );
+}
 
 const data = [
   {
@@ -35,7 +53,11 @@ const StyleContainer = styled.div`
   display: flex;
 `;
 
+const score = 3;
+
 export default function MapContainer() {
+  // 인포윈도우 Open 여부를 저장
+  // 현 위치 찍기. 일단 카카오 본사 위치
   const [currentPosition, setCurrentPosition] = useState({
     lat: 33.450701,
     lng: 126.570667,
@@ -65,15 +87,23 @@ export default function MapContainer() {
 
   const EventMarkerContainer = ({ position, content }) => {
     const map = useMap();
-    const [isVisible, setIsVisible] = useState(false);
-    console.log(position);
+    const [isOpen, setIsOpen] = useState(false);
+    const handleIsOpen = () => {
+      setIsOpen(!isOpen);
+    };
+    // const [isVisible, setIsVisible] = useState(false);
     return (
       <MapMarker
         position={position} // 마커를 표시할 위치
         // @ts-ignore
-        onClick={(marker) => map.panTo(marker.getPosition())}
-        onMouseOver={() => setIsVisible(true)}
-        onMouseOut={() => setIsVisible(false)}
+        // onClick={(marker) => map.panTo(marker.getPosition())}
+        // onMouseOver={() => setIsVisible(true)}
+        // onMouseOut={() => setIsVisible(false)}
+
+        onClick={(marker) => {
+          map.panTo(marker.getPosition());
+          handleIsOpen();
+        }}
         image={{
           src: "https://raw.githubusercontent.com/LikeLionHGU/Hot_Front/6d359b4c9a92ef99cf7abe47149b0ffadba76aaf/src/imgs/marker.svg",
           size: { width: 22, height: 32 }, // 마커이미지의 크기입니다
@@ -85,7 +115,16 @@ export default function MapContainer() {
           },
         }}
       >
-        {isVisible && content}
+        {isOpen && (
+          <>
+            {content}
+            {/* <img src={firePoint} alt="불점" />
+            <img src={nonFirePoint} alt="불점" /> */}
+            <FirePoints score={score} />
+            <div>리뷰 : 00</div>
+            <div>주소...</div>
+          </>
+        )}
       </MapMarker>
     );
   };
