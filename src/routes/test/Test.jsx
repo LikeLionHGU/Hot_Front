@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Header from "../../components/header/header";
-import Result from "../TestResult";
+import Result from "../result/TestResult";
 import Loading from "../loading/Loading";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
