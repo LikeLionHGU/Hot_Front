@@ -1,33 +1,33 @@
 import { useNavigate } from "react-router-dom";
 
-import Header from "../components/header/header";
+import Header from "../../components/header/header";
 import styled from "styled-components";
-import Fade from "../components/fade";
+import Fade from "../../components/fade";
 
-import MaepguSmall from "../imgs/maepgu_small.svg";
-import MaepguBig from "../imgs/maepgu_big.svg";
-import MaepguBack from "../imgs/maepgu_back.svg";
+import MaepguSmall from "../../imgs/maepgu_small.svg";
+import MaepguBig from "../../imgs/maepgu_big.svg";
+import MaepguBack from "../../imgs/maepgu_back.svg";
 
-import MaepnoseSmall from "../imgs/maepnose_small.svg";
-import MaepnoseBig from "../imgs/maepnose_big.svg";
-import MaepnoseBack from "../imgs/maepnose_back.svg";
+import MaepnoseSmall from "../../imgs/maepnose_small.svg";
+import MaepnoseBig from "../../imgs/maepnose_big.svg";
+import MaepnoseBack from "../../imgs/maepnose_back.svg";
 
-import MaepmuljuSmall from "../imgs/maepmulju_small.svg";
-import MaepmuljuBig from "../imgs/maepmulju_big.svg";
-import MaepmuljuBack from "../imgs/maepmulju_back.svg";
+import MaepmuljuSmall from "../../imgs/maepmulju_small.svg";
+import MaepmuljuBig from "../../imgs/maepmulju_big.svg";
+import MaepmuljuBack from "../../imgs/maepmulju_back.svg";
 
-import WiamplannerSmall from "../imgs/wiamplanner_small.svg";
-import WiamplannerBig from "../imgs/wiamplanner_big.svg";
-import WiamplannerBack from "../imgs/wiamplanner_back.svg";
+import WiamplannerSmall from "../../imgs/wiamplanner_small.svg";
+import WiamplannerBig from "../../imgs/wiamplanner_big.svg";
+import WiamplannerBack from "../../imgs/wiamplanner_back.svg";
 
-import SlibiFairySmall from "../imgs/silbifairy_small.svg";
-import SlibiFairyBig from "../imgs/silbifairy_big.svg";
-import SlibiFairyBack from "../imgs/silbifairy_back.svg";
+import SlibiFairySmall from "../../imgs/silbifairy_small.svg";
+import SlibiFairyBig from "../../imgs/silbifairy_big.svg";
+import SlibiFairyBack from "../../imgs/silbifairy_back.svg";
 
-import DownArrow from "../imgs/downArrow.svg";
-import UpArrow from "../imgs/upArrow.svg";
+import DownArrow from "../../imgs/downArrow.svg";
+import UpArrow from "../../imgs/upArrow.svg";
 
-import "../assets/font.css";
+import "../../assets/font.css";
 
 const StyleContainer = styled.div`
   display: flex;
