@@ -170,22 +170,6 @@ export default function MapContainer() {
       <SideBar />
 
       <Map center={currentPosition} style={{ width: "100vw", height: "100vh" }}>
-        {/* <MapMarker
-          position={currentPosition}
-          image={{
-            src: "https://raw.githubusercontent.com/LikeLionHGU/Hot_Front/6d359b4c9a92ef99cf7abe47149b0ffadba76aaf/src/imgs/marker.svg",
-            size: {
-              width: 22,
-              height: 32,
-            }, // 마커이미지의 크기입니다
-            options: {
-              offset: {
-                x: 10,
-                y: 60,
-              },
-            },
-          }}
-        ></MapMarker> */}
         {data.map((value) => (
           <EventMarkerContainer
             key={`EventMarkerContainer-${value.xaxis}-${value.yaxis}`}
