@@ -6,7 +6,9 @@ import { ReactComponent as Char } from "../../imgs/charimg.svg";
 import { ReactComponent as MyBtn } from "../../imgs/mybtn.svg";
 import { useNavigate } from "react-router";
 
-const MyPageContainer = styled.div``;
+const MyPageContainer = styled.div`
+  margin-top: 70px;
+`;
 
 const Wall = styled.div`
   margin-left: 228px;
@@ -34,24 +36,49 @@ const CharImg = styled.div`
 
 const CharText = styled.div`
   color: white;
-  margin-left: 50px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Level = styled.div`
   margin-top: 93px;
-  margin-left: 34px;
   font-size: 16px;
 `;
 
 const CharName = styled.div`
   margin-top: 9px;
-  font-size: 20px;
+  font-size: 22px;
+  font-family: Dream5;
+  font-weight: bold;
 `;
 
 const Btn = styled.div`
   width: 228px;
   height: 58px;
   margin-top: 104px;
+`;
+
+const ScrollContainer = styled.div`
+  overflow: scroll;
+
+  width: 1000px;
+  height: 750px;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+    height: 100%;
+    background-color: #e2dddd;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    height: 160px;
+    background-color: #afa4a4;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #e2dddd;
+  }
 `;
 
 const Review = styled.div`
@@ -61,8 +88,12 @@ const Review = styled.div`
   margin-left: 108px;
 `;
 
-const RContent = styled.h2`
+const RContent = styled.div`
   display: block;
+  font-family: Dream5;
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #410a0a;
 `;
 
 const ReviewBox = styled.div`
@@ -79,6 +110,7 @@ const Name = styled.div`
   margin-left: 22px;
   font-size: 14px;
   color: #410a0a;
+  font-family: Dream5;
 `;
 
 const Detail = styled.div`
@@ -143,33 +175,71 @@ export default function MyPage() {
                 <MyBtn onClick={toTest} />
               </Btn>
             </CharContainer>
-            <Review>
-              <RContent>리뷰 내역</RContent>
-              <ReviewBox>
-                <Name>음식점 이름 > </Name>
-                <Detail>
-                  <Fire>불점 5개</Fire>
-                  <Date>등록 날짜</Date>
-                </Detail>
-                <Menu>
-                  <MenuBox>음식 메뉴 1</MenuBox>
-                  <MenuBox>음식 메뉴 아무거나</MenuBox>
-                  <MenuBox>음식 메뉴 아무거나</MenuBox>
-                </Menu>
-              </ReviewBox>
-              <ReviewBox>
-                <Name>음식점 이름 > </Name>
-                <Detail>
-                  <Fire>불점 10개</Fire>
-                  <Date>등록 날짜</Date>
-                </Detail>
-                <Menu>
-                  <MenuBox>음식 메뉴 1</MenuBox>
-                  <MenuBox>음식 메뉴 2</MenuBox>
-                  <MenuBox>음식 메뉴 3</MenuBox>
-                </Menu>
-              </ReviewBox>
-            </Review>
+            <ScrollContainer>
+              <Review>
+                <RContent>리뷰 내역</RContent>
+                <ReviewBox>
+                  <Name>음식점 이름 > </Name>
+                  <Detail>
+                    <Fire>불점 5개</Fire>
+                    <Date>등록 날짜</Date>
+                  </Detail>
+                  <Menu>
+                    <MenuBox>음식 메뉴 1</MenuBox>
+                    <MenuBox>음식 메뉴 아무거나</MenuBox>
+                    <MenuBox>음식 메뉴 아무거나</MenuBox>
+                  </Menu>
+                </ReviewBox>
+                <ReviewBox>
+                  <Name>음식점 이름 > </Name>
+                  <Detail>
+                    <Fire>불점 10개</Fire>
+                    <Date>등록 날짜</Date>
+                  </Detail>
+                  <Menu>
+                    <MenuBox>음식 메뉴 1</MenuBox>
+                    <MenuBox>음식 메뉴 2</MenuBox>
+                    <MenuBox>음식 메뉴 3</MenuBox>
+                  </Menu>
+                </ReviewBox>
+                <ReviewBox>
+                  <Name>음식점 이름 > </Name>
+                  <Detail>
+                    <Fire>불점 10개</Fire>
+                    <Date>등록 날짜</Date>
+                  </Detail>
+                  <Menu>
+                    <MenuBox>음식 메뉴 1</MenuBox>
+                    <MenuBox>음식 메뉴 2</MenuBox>
+                    <MenuBox>음식 메뉴 3</MenuBox>
+                  </Menu>
+                </ReviewBox>
+                <ReviewBox>
+                  <Name>음식점 이름 > </Name>
+                  <Detail>
+                    <Fire>불점 10개</Fire>
+                    <Date>등록 날짜</Date>
+                  </Detail>
+                  <Menu>
+                    <MenuBox>음식 메뉴 1</MenuBox>
+                    <MenuBox>음식 메뉴 2</MenuBox>
+                    <MenuBox>음식 메뉴 3</MenuBox>
+                  </Menu>
+                </ReviewBox>
+                <ReviewBox>
+                  <Name>음식점 이름 > </Name>
+                  <Detail>
+                    <Fire>불점 10개</Fire>
+                    <Date>등록 날짜</Date>
+                  </Detail>
+                  <Menu>
+                    <MenuBox>음식 메뉴 1</MenuBox>
+                    <MenuBox>음식 메뉴 2</MenuBox>
+                    <MenuBox>음식 메뉴 3</MenuBox>
+                  </Menu>
+                </ReviewBox>
+              </Review>
+            </ScrollContainer>
           </ContentContainer>
         </Wall>
       </MyPageContainer>

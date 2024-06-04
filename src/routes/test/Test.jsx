@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import Header from "../../components/header/header";
-import Result from "../TestResult";
 import Loading from "../loading/Loading";
+import ProgressBar from "react-scroll-progress-bar";
+import "./test.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Img1 } from "../../imgs/testimg1.svg";
@@ -11,6 +12,7 @@ import { ReactComponent as Img3 } from "../../imgs/testimg3.svg";
 const StyleContainer = styled.div`
   width: 100%;
   height: 100%;
+  margin-top: 144.5px;
 `;
 
 const StyleQuestion = styled.div`
@@ -104,6 +106,7 @@ const ResultBtn = styled.button`
     cursor: not-allowed;
   `}
 `;
+
 const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -111,7 +114,7 @@ const LoadingContainer = styled.div`
 
 export default function Main() {
   const [loading, setLoading] = useState(false);
-  const [selectedNum, setselectedNum] = useState(Array(13).fill(null));
+  const [selectedNum, setSelectedNum] = useState(Array(13).fill(null));
   const sizes = [1, 2, 3, 4, 5];
 
   const question = [
@@ -131,10 +134,10 @@ export default function Main() {
   ];
 
   const handleSelect = (questionIndex, size) => {
-    const updatedselectedNum = [...selectedNum];
-    updatedselectedNum[questionIndex] = size;
-    setselectedNum(updatedselectedNum);
-    console.log(updatedselectedNum);
+    const updatedSelectedNum = [...selectedNum];
+    updatedSelectedNum[questionIndex] = size;
+    setSelectedNum(updatedSelectedNum);
+    console.log(updatedSelectedNum);
   };
 
   const calculateSize = (index) => {
@@ -159,6 +162,12 @@ export default function Main() {
       ) : (
         <>
           <Header isHeader="test" />
+          <ProgressBar
+            margin={70}
+            height={14}
+            bgcolor="#BF2202"
+            duration="0.1"
+          />
           {[...Array(13)].map((_, questionIndex) => (
             <StyleQuestion key={questionIndex}>
               <QuestionBox>

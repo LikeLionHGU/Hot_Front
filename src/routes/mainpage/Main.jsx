@@ -12,12 +12,9 @@ const StyleContainer = styled.div`
   height: 100%;
 `;
 
-// const Header = styled.div`
-//   height: 70px;
-//   display: flex;
-// `;
-
-const Body = styled.div``;
+const Body = styled.div`
+  margin-top: 158px;
+`;
 
 const Mention = styled.div`
   display: block;
