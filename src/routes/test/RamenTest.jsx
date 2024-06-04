@@ -120,7 +120,7 @@ export default function RamenTest() {
   const handleResult = () => {
     setLoading(true);
     setTimeout(() => {
-      setLoading(true);
+      setLoading(false);
       navigate("/result");
     }, 4000); // 4초 동안 로딩 화면
   };
@@ -135,15 +135,15 @@ export default function RamenTest() {
         <>
           <Header />
           <TestContainer>
-            <Btn
-              onClick={handlePrev}
-              disabled={currentIndex === 0}
-              style={{
-                display: currentIndex === 0 ? "none" : "block",
-              }}
-            >
-              <Prevbtn />
-            </Btn>
+            {currentIndex === 0 ? (
+              <div
+                style={{ width: "60px", height: "60px", marginTop: "70px" }}
+              ></div>
+            ) : (
+              <Btn onClick={handlePrev}>
+                <Prevbtn />
+              </Btn>
+            )}
             <Content>
               <Question>내가 먹을 수 있는 맵기 정도는?</Question>
               <Title>{ques[currentIndex]}</Title>
@@ -165,9 +165,15 @@ export default function RamenTest() {
               </AnswerContainter>
             </Content>
             {currentIndex === ques.length - 1 ? (
-              <Btn disabled={!isAllQuestionsAnswered} onClick={handleResult}>
-                <Resultbtn />
-              </Btn>
+              isAllQuestionsAnswered ? (
+                <Btn onClick={handleResult}>
+                  <Resultbtn />
+                </Btn>
+              ) : (
+                <div
+                  style={{ width: "60px", height: "60px", marginTop: "70px" }}
+                ></div>
+              )
             ) : (
               <Btn onClick={handleNext}>
                 <Nextbtn />

@@ -9,6 +9,10 @@ const StyleContainer = styled.div`
   height: 70px;
   background-color: white;
   box-shadow: 0px 1px 5px #c0c0c0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
 
   display: flex;
   align-items: center;
@@ -57,6 +61,8 @@ const ReturnBtn = styled.button`
 const LoginBtn = styled.button`
   border: 0;
   background-color: white;
+  font-family: Dream5;
+  font-size: 16px;
 `;
 
 function getTitle(isHeader) {
