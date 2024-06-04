@@ -58,7 +58,7 @@ export default function Main() {
 
   return (
     <StyleContainer>
-      <Header />
+      <Header isHeader="main" />
       {/* <Logo>
           <LogoImg></LogoImg>
         </Logo>
