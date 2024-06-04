@@ -33,3 +33,15 @@
     url("./fonts/SCDream5.otf") format("truetype");
   font-display: swap;
 }
+
+@font-face {
+  font-family: "Dream6";
+  font-weight: 300;
+  font-style: normal;
+  src: url("./fonts/SCDream6.otf");
+  src: url("./fonts/SCDream6.otf") format("embedded-opentype"),
+    url("./fonts/SCDream6.otf") format("woff2"),
+    url("./fonts/SCDream6.otf") format("woff"),
+    url("./fonts/SCDream6.otf") format("truetype");
+  font-display: swap;
+}

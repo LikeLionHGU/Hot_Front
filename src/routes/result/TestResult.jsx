@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/header";
 import styled from "styled-components";
 import Fade from "../../components/fade";
+import Font from "../../assets/font.css";
 
 import MaepguSmall from "../../imgs/maepgu_small.svg";
 import MaepguBig from "../../imgs/maepgu_big.svg";
@@ -23,11 +24,13 @@ import WiamplannerBack from "../../imgs/wiamplanner_back.svg";
 import SlibiFairySmall from "../../imgs/silbifairy_small.svg";
 import SlibiFairyBig from "../../imgs/silbifairy_big.svg";
 import SlibiFairyBack from "../../imgs/silbifairy_back.svg";
+import SlibiFairyBackground from "../../imgs/silbifairy_background.svg";
 
 import DownArrow from "../../imgs/downArrow.svg";
 import UpArrow from "../../imgs/upArrow.svg";
 
 import "../../assets/font.css";
+import { useEffect, useState } from "react";
 
 const StyleContainer = styled.div`
   display: flex;
@@ -35,11 +38,14 @@ const StyleContainer = styled.div`
   align-items: center;
 
   margin-top: 40px;
+  margin-bottom: 100px;
 `;
 
 const Above = styled.div`
   display: flex;
-  margin-bottom: 50px;
+  align-items: flex-end;
+
+  margin-bottom: 20px;
 `;
 
 const AboveLeft = styled.div`
@@ -48,30 +54,48 @@ const AboveLeft = styled.div`
   align-items: center;
 `;
 
-const UserChar = styled.div``;
+const UserChar = styled.div`
+  font-family: Dream6;
+  font-size: 23px;
+
+  margin-bottom: 25px;
+`;
 
 const AboveRight = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
-  margin-left: 80px;
-  margin-top: 30px;
-  margin-bottom: 10px;
+  align-items: center;
+  margin-left: 100px;
 
   font-family: NanumVariable;
 `;
 
+const Info = styled.div`
+  height: 245px;
+  padding: 25px;
+
+  font-family: NanumVariable;
+  line-height: 50px;
+
+  background-image: url(${SlibiFairyBackground});
+  background-size: contain;
+  background-repeat: no-repeat;
+`;
+
 const MapBtn = styled.button`
-  width: 312px;
-  height: 68px;
+  width: 300px;
+  height: 55px;
+
+  margin-bottom: 15px;
+  margin-top: 40px;
 
   border: none;
   border-radius: 8px;
   background-color: #e55936;
   color: white;
 
-  margin-left: 50px;
+  font-family: Dream5;
+  font-size: 18px;
 
   &:hover {
     cursor: pointer;
@@ -79,7 +103,7 @@ const MapBtn = styled.button`
 `;
 
 const Blank = styled.div`
-  height: 400px;
+  height: 300px;
 `;
 
 const MiddleBottom = styled.div`
@@ -91,7 +115,7 @@ const MiddleBottom = styled.div`
 const Bottom = styled.div`
   display: flex;
 
-  margin-top: 200px;
+  margin-top: 100px;
 `;
 
 const ImgContainer = styled.div`
@@ -131,6 +155,31 @@ const BackImage = styled(Image)`
 `;
 
 export default function TestResult() {
+  // const url = `http://223.p-e.kr:8080/get/survey/result`;
+  // const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   fetch(url)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setData(data);
+  //     });
+  // }, []);
+
+  const scrollToBottom = () => {
+    window.scroll({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollToTop = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const navigate = useNavigate();
 
   function toMap() {
@@ -146,7 +195,7 @@ export default function TestResult() {
             <img src={SlibiFairyBig} alt="big" />
           </AboveLeft>
           <AboveRight>
-            <div>
+            <Info>
               "뾰로롱~ο(=•ω＜=)ρ⌒☆ (캡사이신을 뿌리며)"
               <br />
               매운맛을 통달한 당신은 매운 음식 앞에서 두려움 따위 없습니다.
@@ -156,17 +205,22 @@ export default function TestResult() {
               어떠한 매운 맛의 공격에도 끄떡 없는 당신!
               <br />
               어떤 음식이든 마법으로 맵게 만듭니다!
-            </div>
+            </Info>
             <MapBtn onClick={toMap}>지도 보러가기</MapBtn>
           </AboveRight>
         </Above>
-        <div style={{ margin: "13px" }}>다른 캐릭터들 보러 가기</div>
-        <img src={DownArrow} alt="downarrow" />
+        {/* 누르는 곳을 크게 할까 말까 */}
+        <div onClick={scrollToBottom} style={{ margin: "13px" }}>
+          다른 캐릭터들 보러 가기
+        </div>
+        <img onClick={scrollToBottom} src={DownArrow} alt="downarrow" />
         <Blank />
         <Fade>
           <MiddleBottom>
-            <img src={UpArrow} alt="uparrow" />
-            <div style={{ margin: "13px" }}>내 캐릭터 보러 가기</div>
+            <img onClick={scrollToTop} src={UpArrow} alt="uparrow" />
+            <div onClick={scrollToTop} style={{ margin: "13px" }}>
+              내 캐릭터 보러 가기
+            </div>
           </MiddleBottom>
         </Fade>
         <Fade>
