@@ -44,10 +44,19 @@ const StyleContainer = styled.div`
 //   box-shadow: 1px 0px 5px #c0c0c0;
 // `;
 
-const InfoContainer = styled.div``;
+const InfoContainer = styled.div`
+  width: 250px;
+  height: 100px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 const InfoAbove = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const InfoMiddle = styled.div`
@@ -79,8 +88,6 @@ export default function MapContainer() {
   // 현 위치 찍기. 일단 카카오 본사 위치
 
   const [data, setRestaurant] = useState([]);
-
-  console.log(data);
 
   const [currentPosition, setCurrentPosition] = useState({
     lat: 33.450701,
@@ -117,7 +124,11 @@ export default function MapContainer() {
     }
   }, []);
 
-  const EventMarkerContainer = ({ position, storeName }) => {
+  const EventMarkerContainer = ({
+    position,
+    storeName,
+    localNumberAddress,
+  }) => {
     const map = useMap();
     const [isOpen, setIsOpen] = useState(false);
     const handleIsOpen = () => {
@@ -143,7 +154,7 @@ export default function MapContainer() {
           options: {
             offset: {
               x: 11,
-              y: 32,
+              y: 38,
             },
           },
         }}
@@ -152,13 +163,13 @@ export default function MapContainer() {
           <InfoContainer>
             <InfoAbove>
               <div>{storeName}</div>
-              <img src={CloseImg} alt="닫기 표시" />
+              <img onClick={handleIsOpen} src={CloseImg} alt="닫기 표시" />
             </InfoAbove>
             <InfoMiddle>
               <FirePoints score={score} />
               <div>리뷰 : 00</div>
             </InfoMiddle>
-            <div>주소...</div>
+            <div>{localNumberAddress}</div>
           </InfoContainer>
         )}
       </MapMarker>
@@ -175,6 +186,7 @@ export default function MapContainer() {
             key={`EventMarkerContainer-${value.xaxis}-${value.yaxis}`}
             position={{ lng: value.xaxis, lat: value.yaxis }}
             storeName={value.storeName}
+            localNumberAddress={value.localNumberAddress}
           />
         ))}
       </Map>
