@@ -37,7 +37,7 @@ const StyleContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  margin-top: 40px;
+  margin-top: 130px;
   margin-bottom: 100px;
 `;
 
