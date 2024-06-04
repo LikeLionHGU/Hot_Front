@@ -3,25 +3,9 @@ import { Map, useMap, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
 import SideBar from "../../components/SideBar.jsx";
-import firePoint from "../../imgs/firePoint.svg";
-import nonFirePoint from "../../imgs/nonFirePoint.svg";
-
-function FirePoints({ score }) {
-  const totalPoints = 5;
-  const firePoints = Array(score).fill(firePoint);
-  const nonFirePoints = Array(totalPoints - score).fill(nonFirePoint);
-
-  return (
-    <div>
-      {firePoints.map((src, index) => (
-        <img key={`fire-${index}`} src={src} alt="불점" />
-      ))}
-      {nonFirePoints.map((src, index) => (
-        <img key={`nonfire-${index}`} src={src} alt="비 불점" />
-      ))}
-    </div>
-  );
-}
+import FirePoint from "../../imgs/firePoint.svg";
+import NonFirePoint from "../../imgs/nonFirePoint.svg";
+import CloseImg from "../../imgs/close.svg";
 
 const regdata = [
   {
@@ -56,7 +40,39 @@ const StyleContainer = styled.div`
   display: flex;
 `;
 
+// const StyledSideBar = styled(SideBar)`
+//   box-shadow: 1px 0px 5px #c0c0c0;
+// `;
+
+const InfoContainer = styled.div``;
+
+const InfoAbove = styled.div`
+  display: flex;
+`;
+
+const InfoMiddle = styled.div`
+  display: flex;
+`;
+
+// dummy
 const score = 3;
+
+function FirePoints({ score }) {
+  const totalPoints = 5;
+  const firePoints = Array(score).fill(FirePoint);
+  const nonFirePoints = Array(totalPoints - score).fill(NonFirePoint);
+
+  return (
+    <div>
+      {firePoints.map((src, index) => (
+        <img key={`fire-${index}`} src={src} alt="불점" />
+      ))}
+      {nonFirePoints.map((src, index) => (
+        <img key={`nonfire-${index}`} src={src} alt="비 불점" />
+      ))}
+    </div>
+  );
+}
 
 export default function MapContainer() {
   // 인포윈도우 Open 여부를 저장
@@ -133,12 +149,17 @@ export default function MapContainer() {
         }}
       >
         {isOpen && (
-          <>
-            <div>{storeName}</div>
-            <FirePoints score={score} />
-            <div>리뷰 : 00</div>
+          <InfoContainer>
+            <InfoAbove>
+              <div>{storeName}</div>
+              <img src={CloseImg} alt="닫기 표시" />
+            </InfoAbove>
+            <InfoMiddle>
+              <FirePoints score={score} />
+              <div>리뷰 : 00</div>
+            </InfoMiddle>
             <div>주소...</div>
-          </>
+          </InfoContainer>
         )}
       </MapMarker>
     );
