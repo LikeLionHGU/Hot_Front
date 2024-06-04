@@ -83,7 +83,7 @@ function getButton(isHeader) {
         // </Link>
       );
     case "main":
-      return <LoginBtn>로그인</LoginBtn>;
+      return <LoginBtn href="">로그인</LoginBtn>;
     default:
       return null;
   }

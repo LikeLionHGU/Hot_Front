@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import CharacterLogo from "../../../imgs/characterLogo.svg";
+import CharacterLogo from "../imgs/characterLogo.svg";
 
 const Sidebar = styled.div`
   display: flex;

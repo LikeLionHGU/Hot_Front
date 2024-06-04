@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Header from "../../components/header/header";
+import Result from "../result/TestResult";
 import Loading from "../loading/Loading";
 import ProgressBar from "react-scroll-progress-bar";
 import "./test.css";

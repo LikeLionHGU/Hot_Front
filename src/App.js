@@ -3,7 +3,7 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Main from "./routes/mainpage/Main";
 import Test from "./routes/test/Test";
-import Result from "./routes/TestResult";
+import Result from "./routes/result/TestResult.jsx";
 import MyPage from "./routes/mypage/MyPage";
 import Map from "./routes/map/MapContainer";
 import MapContainer from "./routes/map/MapContainer";
