@@ -62,7 +62,7 @@ function logReturnBtn(isHeader) {
     case "test":
       return <ReturnBtn>처음으로</ReturnBtn>;
     case "main":
-      return <LoginBtn>로그인</LoginBtn>;
+      return <LoginBtn href="">로그인</LoginBtn>;
     default:
       return "";
   }
