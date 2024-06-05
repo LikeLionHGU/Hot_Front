@@ -63,9 +63,6 @@ const InfoMiddle = styled.div`
   display: flex;
 `;
 
-// dummy
-const score = 3;
-
 function FirePoints({ score }) {
   const totalPoints = 5;
   const firePoints = Array(score).fill(FirePoint);
@@ -87,7 +84,7 @@ export default function MapContainer() {
   // 인포윈도우 Open 여부를 저장
   // 현 위치 찍기. 일단 카카오 본사 위치
 
-  const [data, setRestaurant] = useState([]);
+  const [data, setData] = useState([]);
 
   const [currentPosition, setCurrentPosition] = useState({
     lat: 33.450701,
@@ -106,9 +103,9 @@ export default function MapContainer() {
           fetch(url)
             .then((response) => response.json())
             .then((data) => {
-              setRestaurant(data);
+              setData(data);
             })
-            .catch((e) => setRestaurant(regdata));
+            .catch((e) => setData(regdata));
         },
         () => {
           alert("위치 정보를 가져오는데 실패했습니다.");
@@ -128,13 +125,27 @@ export default function MapContainer() {
     position,
     storeName,
     localNumberAddress,
+    storeId,
   }) => {
     const map = useMap();
     const [isOpen, setIsOpen] = useState(false);
+    const [review, setReview] = useState([]);
+
     const handleIsOpen = () => {
       setIsOpen(!isOpen);
+      if (!isOpen) {
+        const urlR = `http://223.p-e.kr:8080/get/store/spicy-level?storeId=${storeId}`;
+
+        fetch(urlR)
+          .then((response) => response.json())
+          .then((review) => {
+            setReview(review);
+          });
+      }
     };
+    console.log(review);
     // const [isVisible, setIsVisible] = useState(false);
+
     return (
       <MapMarker
         position={position} // 마커를 표시할 위치
@@ -165,10 +176,12 @@ export default function MapContainer() {
               <div>{storeName}</div>
               <img onClick={handleIsOpen} src={CloseImg} alt="닫기 표시" />
             </InfoAbove>
-            <InfoMiddle>
-              <FirePoints score={score} />
-              <div>리뷰 : 00</div>
-            </InfoMiddle>
+            {review.map((reviewData, index) => (
+              <InfoMiddle key={index}>
+                <FirePoints score={reviewData.spicyLevelList} />
+                <div>{reviewData.reviewCountList}</div>
+              </InfoMiddle>
+            ))}
             <div>{localNumberAddress}</div>
           </InfoContainer>
         )}
@@ -187,6 +200,7 @@ export default function MapContainer() {
             position={{ lng: value.xaxis, lat: value.yaxis }}
             storeName={value.storeName}
             localNumberAddress={value.localNumberAddress}
+            storeId={value.storeId}
           />
         ))}
       </Map>
