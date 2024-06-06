@@ -83,7 +83,15 @@ function getButton(isHeader) {
         // </Link>
       );
     case "main":
-      return <LoginBtn href="">로그인</LoginBtn>;
+      return (
+        <LoginBtn
+          onClick={() =>
+            (window.location.href = "http://223.p-e.kr:8080/get/login")
+          }
+        >
+          로그인
+        </LoginBtn>
+      );
     default:
       return null;
   }

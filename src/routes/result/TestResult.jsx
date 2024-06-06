@@ -185,6 +185,7 @@ export default function TestResult() {
   function toMap() {
     navigate("/map");
   }
+
   return (
     <>
       <Header />

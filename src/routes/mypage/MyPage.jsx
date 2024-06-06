@@ -2,9 +2,11 @@ import styled from "styled-components";
 import Header from "../../components/header/header";
 
 import { ReactComponent as Wallpaper } from "../../imgs/mywall.svg";
-import { ReactComponent as Char } from "../../imgs/charimg.svg";
+// import { ReactComponent as Char } from "../../imgs/charimg.svg";
+import Char from "../../imgs/charimg.svg";
 import { ReactComponent as MyBtn } from "../../imgs/mybtn.svg";
 import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 
 const MyPageContainer = styled.div`
   margin-top: 70px;
@@ -31,6 +33,7 @@ const CharContainer = styled.div`
 `;
 
 const CharImg = styled.div`
+  width: 228px;
   margin-top: 87px;
 `;
 
@@ -42,8 +45,14 @@ const CharText = styled.div`
   align-items: center;
 `;
 
+const UserId = styled.div`
+  margin-top: 22px;
+  font-size: 22px;
+  font-family: Dream5;
+  font-weight: bold;
+`;
 const Level = styled.div`
-  margin-top: 93px;
+  margin-top: 45px;
   font-size: 16px;
 `;
 
@@ -150,10 +159,50 @@ const MenuBox = styled.div`
 
 export default function MyPage() {
   const navigate = useNavigate();
+  const characterMyPageImage = Char;
+  const userName = ["사건은다가와아오에"];
+  const characterName = ["맵구", "맵노스", "맵물주", "위암플래너", "실비요정"];
+  const [reviewList, setReviewList] = useState([]);
 
   function toTest() {
     navigate("/test");
   }
+
+  useEffect(() => {
+    const dummyData = {
+      reviewList: [
+        {
+          title: "하하",
+          comment: "추천",
+          spicyLevel: 5,
+          reviewImage: null,
+          foodName: "음식 메뉴",
+          storeId: "26546824",
+          userEmail: "22000116@handong.ac.kr",
+        },
+        {
+          title: "하하",
+          comment: "추천",
+          reviewSpicyLevel: 4,
+          reviewImage: null,
+          foodName: null,
+          storeId: "26546824",
+          userEmail: "22000116@handong.ac.kr",
+        },
+        {
+          title: "하하",
+          comment: "추천",
+          reviewSpicyLevel: 2,
+          reviewImage: null,
+          foodName: null,
+          storeId: "26546824",
+          userEmail: "22000116@handong.ac.kr",
+        },
+      ],
+    };
+    setReviewList(dummyData.reviewList);
+  }, []);
+
   return (
     <>
       <Header />
@@ -165,11 +214,14 @@ export default function MyPage() {
           <ContentContainer>
             <CharContainer>
               <CharImg>
-                <Char />
+                <img src={characterMyPageImage} />
+                {/* <img src={characterMyPageImage} /> */}
+                {/* <Char /> */}
               </CharImg>
               <CharText>
+                <UserId>{userName}</UserId>
                 <Level>맵기 레벨</Level>
-                <CharName>5단계 : 실비요정</CharName>
+                <CharName>{characterName[0]}</CharName>
               </CharText>
               <Btn>
                 <MyBtn onClick={toTest} />
@@ -178,66 +230,18 @@ export default function MyPage() {
             <ScrollContainer>
               <Review>
                 <RContent>리뷰 내역</RContent>
-                <ReviewBox>
-                  <Name>음식점 이름 > </Name>
-                  <Detail>
-                    <Fire>불점 5개</Fire>
-                    <Date>등록 날짜</Date>
-                  </Detail>
-                  <Menu>
-                    <MenuBox>음식 메뉴 1</MenuBox>
-                    <MenuBox>음식 메뉴 아무거나</MenuBox>
-                    <MenuBox>음식 메뉴 아무거나</MenuBox>
-                  </Menu>
-                </ReviewBox>
-                <ReviewBox>
-                  <Name>음식점 이름 > </Name>
-                  <Detail>
-                    <Fire>불점 10개</Fire>
-                    <Date>등록 날짜</Date>
-                  </Detail>
-                  <Menu>
-                    <MenuBox>음식 메뉴 1</MenuBox>
-                    <MenuBox>음식 메뉴 2</MenuBox>
-                    <MenuBox>음식 메뉴 3</MenuBox>
-                  </Menu>
-                </ReviewBox>
-                <ReviewBox>
-                  <Name>음식점 이름 > </Name>
-                  <Detail>
-                    <Fire>불점 10개</Fire>
-                    <Date>등록 날짜</Date>
-                  </Detail>
-                  <Menu>
-                    <MenuBox>음식 메뉴 1</MenuBox>
-                    <MenuBox>음식 메뉴 2</MenuBox>
-                    <MenuBox>음식 메뉴 3</MenuBox>
-                  </Menu>
-                </ReviewBox>
-                <ReviewBox>
-                  <Name>음식점 이름 > </Name>
-                  <Detail>
-                    <Fire>불점 10개</Fire>
-                    <Date>등록 날짜</Date>
-                  </Detail>
-                  <Menu>
-                    <MenuBox>음식 메뉴 1</MenuBox>
-                    <MenuBox>음식 메뉴 2</MenuBox>
-                    <MenuBox>음식 메뉴 3</MenuBox>
-                  </Menu>
-                </ReviewBox>
-                <ReviewBox>
-                  <Name>음식점 이름 > </Name>
-                  <Detail>
-                    <Fire>불점 10개</Fire>
-                    <Date>등록 날짜</Date>
-                  </Detail>
-                  <Menu>
-                    <MenuBox>음식 메뉴 1</MenuBox>
-                    <MenuBox>음식 메뉴 2</MenuBox>
-                    <MenuBox>음식 메뉴 3</MenuBox>
-                  </Menu>
-                </ReviewBox>
+                {reviewList.map((review, index) => (
+                  <ReviewBox key={index}>
+                    <Name>음식점 이름 > </Name>
+                    <Detail>
+                      <Fire>불점 {review.spicyLevel}개</Fire>
+                      <Date>{review.spicyLevel}</Date>
+                    </Detail>
+                    <Menu>
+                      <MenuBox>{review.foodName}</MenuBox>
+                    </Menu>
+                  </ReviewBox>
+                ))}
               </Review>
             </ScrollContainer>
           </ContentContainer>

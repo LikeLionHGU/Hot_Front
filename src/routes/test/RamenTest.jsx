@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import Header from "../../components/header/header";
-import Result from "../result/TestResult";
 import Loading from "../loading/Loading";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ReactComponent as Nextbtn } from "../../imgs/nextbtn.svg";
 import { ReactComponent as Prevbtn } from "../../imgs/prevbtn.svg";
 import { ReactComponent as Resultbtn } from "../../imgs/ramenresultbtn.svg";
@@ -91,8 +90,12 @@ const ans = [
 ];
 
 export default function RamenTest() {
+  const location = useLocation();
+  const { firstTestAnswers } = location.state;
+
   const [currentIndex, setcurrentIndex] = useState(0);
   const [selectedNum, setselectedNum] = useState([null, null, null, null]);
+  const [userEmail, setUserEmail] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -100,7 +103,6 @@ export default function RamenTest() {
     const updatedselectedNum = [...selectedNum];
     updatedselectedNum[questionIndex] = size;
     setselectedNum(updatedselectedNum);
-    console.log(updatedselectedNum);
   };
 
   const handleNext = () => {
@@ -117,12 +119,52 @@ export default function RamenTest() {
 
   const isAllQuestionsAnswered = selectedNum.every((size) => size !== null);
 
+  useEffect(() => {
+    fetch(`http://223.p-e.kr:8080/auth/mypage`, {
+      redirect: "manual",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.success) {
+          setUserEmail(res.data.email);
+          console.log("User Email:", res.data.email);
+        }
+      })
+      .catch((error) => {
+        console.error("Error occurred while fetching:", error);
+      });
+  }, []);
+
   const handleResult = () => {
+    const combinedAnswers = [...firstTestAnswers, ...selectedNum];
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigate("/result");
+      navigate("/result", { state: { combinedAnswers } });
     }, 4000); // 4초 동안 로딩 화면
+
+    const surveyScores = combinedAnswers.join("&surveyScore=");
+
+    fetch(
+      `http://223.p-e.kr:8080/get/survey/result?email=${userEmail}&surveyScore=${surveyScores}`,
+      {
+        redirect: "manual",
+        credentials: "include",
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          console.log("Survey result success");
+        }
+      })
+      .catch((error) => {
+        console.error("Error occurred while fetching:", error);
+      });
+
+    console.log(userEmail);
   };
 
   return (
