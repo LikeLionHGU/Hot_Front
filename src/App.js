@@ -1,5 +1,3 @@
-// import logo from './logo.svg';
-// import "./App.css";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Main from "./routes/mainpage/Main";
 import Test from "./routes/test/Test";
