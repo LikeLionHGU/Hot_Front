@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Map, useMap, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
-import SideBar from "../../components/SideBar.jsx";
+import Sidebar from "../../components/review/sidebar.jsx";
 import FirePoint from "../../imgs/firePoint.svg";
 import NonFirePoint from "../../imgs/nonFirePoint.svg";
 import CloseImg from "../../imgs/close.svg";
@@ -200,7 +200,8 @@ export default function MapContainer() {
 
   return (
     <StyleContainer>
-      <SideBar />
+      <Sidebar />
+      {/* <SideBar /> */}
 
       <Map center={currentPosition} style={{ width: "100vw", height: "100vh" }}>
         {data.map((value) => (
