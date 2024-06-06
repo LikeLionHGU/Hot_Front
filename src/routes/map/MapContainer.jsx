@@ -99,7 +99,8 @@ export default function MapContainer() {
           const lng = pos.coords.longitude;
           setCurrentPosition({ lat, lng });
 
-          const url = `http://223.p-e.kr:8080/get/stores?x=${lng}&y=${lat}&radius=1250`;
+          // const url = `http://223.p-e.kr:8080/get/stores?x=${lng}&y=${lat}&radius=10000`;
+          const url = `http://223.p-e.kr:8080/get/stores?x=${lng}&y=${lat}&radius=1000`;
           fetch(url)
             .then((response) => response.json())
             .then((data) => {
@@ -129,12 +130,14 @@ export default function MapContainer() {
   }) => {
     const map = useMap();
     const [isOpen, setIsOpen] = useState(false);
-    const [review, setReview] = useState([]);
+    // const [review, setReview] = useState([]);
+    const [review, setReview] = useState({});
 
     const handleIsOpen = () => {
       setIsOpen(!isOpen);
       if (!isOpen) {
         const urlR = `http://223.p-e.kr:8080/get/store/spicy-level?storeId=${storeId}`;
+        console.log(storeId);
 
         fetch(urlR)
           .then((response) => response.json())
@@ -143,20 +146,20 @@ export default function MapContainer() {
           });
       }
     };
-    console.log(review);
+
+    // [0] - spicyLevelList, [1] - reviewCountList
+    // const spicyReview = Object.values(review);
+    const reviewCount = review.reviewCountList?.at(0) || 0;
+
+    const spicyLevel = review.spicyLevelList?.at(0) || 0;
+
     // const [isVisible, setIsVisible] = useState(false);
 
     return (
       <MapMarker
         position={position} // 마커를 표시할 위치
-        // @ts-ignore
-        // onClick={(marker) => map.panTo(marker.getPosition())}
-        // onMouseOver={() => setIsVisible(true)}
-        // onMouseOut={() => setIsVisible(false)}
-
         onClick={(marker) => {
           map.panTo(marker.getPosition()); // 지도 중앙을 마커
-          console.log(marker.getPosition());
           handleIsOpen(); // 열고 닫는거
         }}
         image={{
@@ -176,12 +179,18 @@ export default function MapContainer() {
               <div>{storeName}</div>
               <img onClick={handleIsOpen} src={CloseImg} alt="닫기 표시" />
             </InfoAbove>
-            {review.map((reviewData, index) => (
-              <InfoMiddle key={index}>
-                <FirePoints score={reviewData.spicyLevelList} />
-                <div>{reviewData.reviewCountList}</div>
+            <InfoMiddle>
+              <InfoMiddle>
+                <FirePoints score={spicyLevel} />
+                <div>리뷰 {(reviewCount || 0).toString().padStart(2, "0")}</div>
+                {/* {review.spicyLevelList.map((spicyLevel) => (
+                  <FirePoints score={spicyLevel} />
+                ))}
+                {review.reviewCountList.map((reviewCount) => (
+                  <div>{reviewCount}</div>
+                ))} */}
               </InfoMiddle>
-            ))}
+            </InfoMiddle>
             <div>{localNumberAddress}</div>
           </InfoContainer>
         )}
