@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import Header from "../../components/header/header";
-import Result from "../result/TestResult";
-import Loading from "../loading/Loading";
 import ProgressBar from "react-scroll-progress-bar";
 import "./test.css";
 import { useState } from "react";
@@ -24,7 +22,6 @@ const StyleQuestion = styled.div`
   height: 84px;
   margin-top: 58px;
   margin-bottom: 100px;
-
   color: #410a0a;
   font-family: Dream5;
   font-size: 20px;
@@ -108,16 +105,9 @@ const ResultBtn = styled.button`
   `}
 `;
 
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 export default function Main() {
-  const [loading, setLoading] = useState(false);
   const [selectedNum, setSelectedNum] = useState(Array(13).fill(null));
   const sizes = [1, 2, 3, 4, 5];
-
   const question = [
     "1. 나는 매운 것을 먹을 때 눈에서도 땀이 난다",
     "2. 청양고추도 고추장에 찍어 먹는다",
@@ -138,7 +128,6 @@ export default function Main() {
     const updatedSelectedNum = [...selectedNum];
     updatedSelectedNum[questionIndex] = size;
     setSelectedNum(updatedSelectedNum);
-    console.log(updatedSelectedNum);
   };
 
   const calculateSize = (index) => {
@@ -151,65 +140,54 @@ export default function Main() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/ramentest");
+    navigate("/ramentest", { state: { firstTestAnswers: selectedNum } });
   };
 
   return (
     <StyleContainer>
-      {loading ? (
-        <LoadingContainer>
-          <Loading />
-        </LoadingContainer>
-      ) : (
-        <>
-          <Header isHeader="test" />
-          <ProgressBar
-            margin={70}
-            height={14}
-            bgcolor="#BF2202"
-            duration="0.1"
-          />
-          {[...Array(13)].map((_, questionIndex) => (
-            <StyleQuestion key={questionIndex}>
-              <QuestionBox>
-                <QText>{question[questionIndex]}</QText>
-              </QuestionBox>
-              <AnswerBox>
-                <Agree>매우 그렇지 않다</Agree>
-                {sizes.map((size, index) => (
-                  <Answer
-                    key={size}
-                    style={{
-                      width: `${calculateSize(index)}px`,
-                      height: `${calculateSize(index)}px`,
-                      borderRadius: "50%",
-                      border: `2px solid #F6B95B`,
-                      backgroundColor:
-                        selectedNum[questionIndex] === size
-                          ? `#F6B95B`
-                          : `transparent`,
-                    }}
-                    onClick={() => handleSelect(questionIndex, size)}
-                  ></Answer>
-                ))}
-                <Agree>매우 그렇다</Agree>
-              </AnswerBox>
-            </StyleQuestion>
-          ))}
-          <Image1>
-            <Img1 />
-          </Image1>
-          <Image2>
-            <Img2 />
-          </Image2>
-          <Image3>
-            <Img3 />
-          </Image3>
-          <ResultBtn disabled={!isAllQuestionsAnswered} onClick={handleClick}>
-            다음으로
-          </ResultBtn>
-        </>
-      )}
+      <>
+        <Header isHeader="test" />
+        <ProgressBar margin={70} height={14} bgcolor="#BF2202" duration="0.1" />
+        {[...Array(13)].map((_, questionIndex) => (
+          <StyleQuestion key={questionIndex}>
+            <QuestionBox>
+              <QText>{question[questionIndex]}</QText>
+            </QuestionBox>
+            <AnswerBox>
+              <Agree>매우 그렇지 않다</Agree>
+              {sizes.map((size, index) => (
+                <Answer
+                  key={size}
+                  style={{
+                    width: `${calculateSize(index)}px`,
+                    height: `${calculateSize(index)}px`,
+                    borderRadius: "50%",
+                    border: `2px solid #F6B95B`,
+                    backgroundColor:
+                      selectedNum[questionIndex] === size
+                        ? `#F6B95B`
+                        : `transparent`,
+                  }}
+                  onClick={() => handleSelect(questionIndex, size)}
+                ></Answer>
+              ))}
+              <Agree>매우 그렇다</Agree>
+            </AnswerBox>
+          </StyleQuestion>
+        ))}
+        <Image1>
+          <Img1 />
+        </Image1>
+        <Image2>
+          <Img2 />
+        </Image2>
+        <Image3>
+          <Img3 />
+        </Image3>
+        <ResultBtn disabled={!isAllQuestionsAnswered} onClick={handleClick}>
+          다음으로
+        </ResultBtn>
+      </>
     </StyleContainer>
   );
 }
