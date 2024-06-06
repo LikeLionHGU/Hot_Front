@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import CharacterLogo from "../imgs/characterLogo.svg";
@@ -10,7 +9,7 @@ const Sidebar = styled.div`
 
   width: 60px;
   height: 100%;
-  box-shadow: 5px black;
+  box-shadow: 1px 0px 5px 0px #c0c0c0;
 `;
 
 const Character = styled.img`
@@ -20,10 +19,8 @@ const Character = styled.img`
 
 export default function SideBar() {
   return (
-    <div>
-      <Sidebar>
-        <Character src={CharacterLogo} alt="캐릭터 로고" />
-      </Sidebar>
-    </div>
+    <Sidebar>
+      <Character src={CharacterLogo} alt="캐릭터 로고" />
+    </Sidebar>
   );
 }
