@@ -44,18 +44,24 @@ const StyleContainer = styled.div`
 //   box-shadow: 1px 0px 5px #c0c0c0;
 // `;
 
-const InfoContainer = styled.div``;
+const InfoContainer = styled.div`
+  width: 250px;
+  height: 100px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 const InfoAbove = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const InfoMiddle = styled.div`
   display: flex;
 `;
-
-// dummy
-const score = 3;
 
 function FirePoints({ score }) {
   const totalPoints = 5;
@@ -78,9 +84,7 @@ export default function MapContainer() {
   // 인포윈도우 Open 여부를 저장
   // 현 위치 찍기. 일단 카카오 본사 위치
 
-  const [data, setRestaurant] = useState([]);
-
-  console.log(data);
+  const [data, setData] = useState([]);
 
   const [currentPosition, setCurrentPosition] = useState({
     lat: 33.450701,
@@ -95,13 +99,14 @@ export default function MapContainer() {
           const lng = pos.coords.longitude;
           setCurrentPosition({ lat, lng });
 
-          const url = `http://223.p-e.kr:8080/get/stores?x=${lng}&y=${lat}&radius=1250`;
+          // const url = `http://223.p-e.kr:8080/get/stores?x=${lng}&y=${lat}&radius=10000`;
+          const url = `http://223.p-e.kr:8080/get/stores?x=${lng}&y=${lat}&radius=1000`;
           fetch(url)
             .then((response) => response.json())
             .then((data) => {
-              setRestaurant(data);
+              setData(data);
             })
-            .catch((e) => setRestaurant(regdata));
+            .catch((e) => setData(regdata));
         },
         () => {
           alert("위치 정보를 가져오는데 실패했습니다.");
@@ -117,24 +122,44 @@ export default function MapContainer() {
     }
   }, []);
 
-  const EventMarkerContainer = ({ position, storeName }) => {
+  const EventMarkerContainer = ({
+    position,
+    storeName,
+    localNumberAddress,
+    storeId,
+  }) => {
     const map = useMap();
     const [isOpen, setIsOpen] = useState(false);
+    // const [review, setReview] = useState([]);
+    const [review, setReview] = useState({});
+
     const handleIsOpen = () => {
       setIsOpen(!isOpen);
+      if (!isOpen) {
+        const urlR = `http://223.p-e.kr:8080/get/store/spicy-level?storeId=${storeId}`;
+        console.log(storeId);
+
+        fetch(urlR)
+          .then((response) => response.json())
+          .then((review) => {
+            setReview(review);
+          });
+      }
     };
+
+    // [0] - spicyLevelList, [1] - reviewCountList
+    // const spicyReview = Object.values(review);
+    const reviewCount = review.reviewCountList?.at(0) || 0;
+
+    const spicyLevel = review.spicyLevelList?.at(0) || 0;
+
     // const [isVisible, setIsVisible] = useState(false);
+
     return (
       <MapMarker
         position={position} // 마커를 표시할 위치
-        // @ts-ignore
-        // onClick={(marker) => map.panTo(marker.getPosition())}
-        // onMouseOver={() => setIsVisible(true)}
-        // onMouseOut={() => setIsVisible(false)}
-
         onClick={(marker) => {
           map.panTo(marker.getPosition()); // 지도 중앙을 마커
-          console.log(marker.getPosition());
           handleIsOpen(); // 열고 닫는거
         }}
         image={{
@@ -143,7 +168,7 @@ export default function MapContainer() {
           options: {
             offset: {
               x: 11,
-              y: 32,
+              y: 38,
             },
           },
         }}
@@ -152,13 +177,21 @@ export default function MapContainer() {
           <InfoContainer>
             <InfoAbove>
               <div>{storeName}</div>
-              <img src={CloseImg} alt="닫기 표시" />
+              <img onClick={handleIsOpen} src={CloseImg} alt="닫기 표시" />
             </InfoAbove>
             <InfoMiddle>
-              <FirePoints score={score} />
-              <div>리뷰 : 00</div>
+              <InfoMiddle>
+                <FirePoints score={spicyLevel} />
+                <div>리뷰 {(reviewCount || 0).toString().padStart(2, "0")}</div>
+                {/* {review.spicyLevelList.map((spicyLevel) => (
+                  <FirePoints score={spicyLevel} />
+                ))}
+                {review.reviewCountList.map((reviewCount) => (
+                  <div>{reviewCount}</div>
+                ))} */}
+              </InfoMiddle>
             </InfoMiddle>
-            <div>주소...</div>
+            <div>{localNumberAddress}</div>
           </InfoContainer>
         )}
       </MapMarker>
@@ -170,27 +203,13 @@ export default function MapContainer() {
       <SideBar />
 
       <Map center={currentPosition} style={{ width: "100vw", height: "100vh" }}>
-        {/* <MapMarker
-          position={currentPosition}
-          image={{
-            src: "https://raw.githubusercontent.com/LikeLionHGU/Hot_Front/6d359b4c9a92ef99cf7abe47149b0ffadba76aaf/src/imgs/marker.svg",
-            size: {
-              width: 22,
-              height: 32,
-            }, // 마커이미지의 크기입니다
-            options: {
-              offset: {
-                x: 10,
-                y: 60,
-              },
-            },
-          }}
-        ></MapMarker> */}
         {data.map((value) => (
           <EventMarkerContainer
             key={`EventMarkerContainer-${value.xaxis}-${value.yaxis}`}
             position={{ lng: value.xaxis, lat: value.yaxis }}
             storeName={value.storeName}
+            localNumberAddress={value.localNumberAddress}
+            storeId={value.storeId}
           />
         ))}
       </Map>
