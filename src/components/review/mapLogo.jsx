@@ -1,20 +1,19 @@
 import styled from "styled-components";
 
-import CharacterLogo from "../imgs/characterLogo.svg";
+import CharacterLogo from "../../imgs/characterLogo.svg";
 
 const Sidebar = styled.div`
+  position: absolute;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 60px;
-  height: 100%;
-  box-shadow: 1px 0px 5px 0px #c0c0c0;
+  flex-direction: row-reverse;
+  width: 100%;
 `;
 
 const Character = styled.img`
   width: 28px;
   height: 48px;
+  margin-top: 10px;
+  margin-right: 14px;
 `;
 
 export default function SideBar() {

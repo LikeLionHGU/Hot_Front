@@ -1,9 +1,10 @@
+// https://ji-u.tistory.com/22
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
-import SideBar from "./SideBar";
+import SideBar from "./mapLogo";
 
-import LeftArrow from "../imgs/goLeftArrow.svg";
-import RightArrow from "../imgs/goRightArrow.svg";
+import LeftArrow from "../../imgs/goLeftArrow.svg";
+import RightArrow from "../../imgs/goRightArrow.svg";
 
 const Container = styled.div`
   background-color: white;
@@ -24,7 +25,7 @@ const Side = styled.div`
 
 const OpenBtn = styled.button`
   position: relative;
-  left: 360px;
+  left: 300px;
   top: 45%;
   width: 20px;
   height: 40px;
@@ -34,6 +35,7 @@ const OpenBtn = styled.button`
   background-color: white;
   box-shadow: inset 5px 0 5px -5px #c0c0c0, 0 -5px 5px -5px #c0c0c0,
     0 5px 5px -5px #c0c0c0, 5px 0 5px -5px #c0c0c0;
+  border-radius: 0px 4px 4px 0px;
 
   /* border-radius: 40px; */
   overflow: hidden;
@@ -48,18 +50,18 @@ const Contents = styled.div`
   width: 100%;
 `;
 
-const Sidebar = ({ width = 360, children }) => {
+const Sidebar = ({ width = 300, children }) => {
   const [isOpen, setOpen] = useState(false);
   const [xPosition, setX] = useState(width);
   const side = useRef();
 
   // button 클릭 시 토글
   const toggleMenu = () => {
-    if (xPosition > 0) {
-      setX(0);
+    if (xPosition > 60) {
+      setX(60);
       setOpen(true);
     } else {
-      setX(300);
+      setX(width);
       setOpen(false);
     }
   };
@@ -69,7 +71,7 @@ const Sidebar = ({ width = 360, children }) => {
     let sideArea = side.current;
     let sideCildren = side.current.contains(e.target);
     if (isOpen && (!sideArea || !sideCildren)) {
-      await setX(300);
+      await setX(width);
       await setOpen(false);
     }
   };
@@ -84,16 +86,16 @@ const Sidebar = ({ width = 360, children }) => {
   return (
     // container
     <Container>
-      {/* {isOpen ? <></> : <SideBar />} */}
       <Side
         ref={side}
         // sidebar
         style={{
           width: `${width}px`,
           height: "100%",
-          transform: `translatex(${-xPosition}px)`,
+          transform: `translatex(${-xPosition + 60}px)`,
         }}
       >
+        {isOpen ? <></> : <SideBar />}
         <OpenBtn onClick={() => toggleMenu()}>
           {isOpen ? (
             <img src={LeftArrow} alt="" />
