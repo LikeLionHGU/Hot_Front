@@ -2,6 +2,9 @@
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
 import SideBar from "./mapLogo";
+import NonLogin from "../review/nonLogin";
+import OnLogin from "../review/onLogin";
+import CompleteReview from "../review/completeReview";
 
 import LeftArrow from "../../imgs/goLeftArrow.svg";
 import RightArrow from "../../imgs/goRightArrow.svg";
@@ -95,7 +98,11 @@ const Sidebar = ({ width = 300, children }) => {
           transform: `translatex(${-xPosition + 60}px)`,
         }}
       >
-        {isOpen ? <></> : <SideBar />}
+        {/* <NonLogin/> 로그인이 안됐을 때 */}
+        {/* <OnLogin /> 로그인 했을 때 */}
+        {/* <CompleteReview/> 리뷰 작성 완료 */}
+
+        {isOpen ? <CompleteReview /> : <SideBar />}
         <OpenBtn onClick={() => toggleMenu()}>
           {isOpen ? (
             <img src={LeftArrow} alt="" />
