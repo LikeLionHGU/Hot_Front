@@ -84,12 +84,13 @@ const SubmitReview = styled.button`
   }
 `;
 
-function FirePoints() {
+function FirePoints({ setReviewSpicyLevel }) {
   const totalPoints = 5;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleClick = (index) => {
     setSelectedIndex(index + 1);
+    setReviewSpicyLevel(index);
   };
 
   return (
@@ -125,7 +126,6 @@ export default function OnLogin() {
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
       });
-    console.log(ID);
     fetch(`http://223.p-e.kr:8080/get/stores/detail?storeId=${ID}`)
       .then((response) => response.json())
       .then((detailStore) => {
@@ -134,7 +134,7 @@ export default function OnLogin() {
       });
   }, [ID]);
 
-  // console.log(email);
+  console.log(userEmail, ID);
 
   const [formData, setFormData] = useState({
     storeId: { ID },
@@ -160,7 +160,12 @@ export default function OnLogin() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          userEmail,
+          storeId: ID,
+          // reviewSpicyLevel: selectedIndex,
+        }),
       });
 
       const data = await response.json();
@@ -182,7 +187,7 @@ export default function OnLogin() {
         <GeneralText>당신의 불점은?</GeneralText>
         <FirePoints
           setReviewSpicyLevel={(level) =>
-            setFormData({ ...formData, reviewSpicyLevel: level })
+            setFormData({ ...formData, reviewSpicyLevel: level + 1 })
           }
         />
         <GeneralText>어떤 음식을 드셨나요?</GeneralText>
