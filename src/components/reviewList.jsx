@@ -191,24 +191,63 @@ const Review = styled.div`
   color: #410a0a;
   font-size: 13px;
 `;
+
 export default function SideBar() {
+  const [storeId, setStoreId] = useState();
+  const [storeName, setStoreName] = useState();
+  const [localNumberAddress, setLocalNumberAddress] = useState();
+  const [phoneNumber, setphoneNumber] = useState();
+  const [xaxis, setXaxis] = useState();
+  const [yaxis, setYaxis] = useState();
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/get/stores/detail?${storeId}`, {
+      redirect: "manual",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setStoreId(res.storeId);
+        setStoreName(res.storeName);
+        setLocalNumberAddress(res.localNumberAddress);
+        setphoneNumber(res.phoneNumber);
+      })
+      .catch((error) => {
+        console.error("Error occurred while fetching:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/get/stores/reivewList?${storeId}`, {
+      redirect: "manual",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setData(res);
+      })
+      .catch((error) => {
+        console.error("Error occurred while fetching:", error);
+      });
+  }, []);
+
   return (
     <>
       {/* <Sidebar>
-        
         <Link to="/">
           <Character src={CharacterLogo} alt="캐릭터 로고" />
         // </Link> */}
       <ScrollContainer>
         <SideBox>
           <BoxTop>
-            <StoreName>카페 브리즈나인</StoreName>
+            <StoreName>{storeName}</StoreName>
             <FirePoints score={score} />
           </BoxTop>
           <BoxMid>
             <StoreDetail>
               <Spotimg />
-              <DetailText>식당 주소</DetailText>
+              <DetailText>{localNumberAddress}</DetailText>
             </StoreDetail>
             <StoreDetail>
               <Phoneimg />
@@ -216,7 +255,7 @@ export default function SideBar() {
             </StoreDetail>
             <StoreDetail>
               <Clockimg />
-              <DetailText>식당 전화번호</DetailText>
+              <DetailText>{phoneNumber}</DetailText>
             </StoreDetail>
           </BoxMid>
           <BoxBottom>
@@ -226,54 +265,38 @@ export default function SideBar() {
               <Writeimg />
               <WriteBtn>리뷰 쓰기</WriteBtn>
             </ReviewTop>
-            <ReviewBox>
-              <UserInfo>
-                <UserChar>
-                  <Profile />
-                </UserChar>
-                <UserBox>
-                  <UserId>사용자 아이디</UserId>
-                  <UserCharName>맵기 검사 캐릭터</UserCharName>
-                </UserBox>
-              </UserInfo>
-              <ReviewInfo>
-                <Fire>불점 5개</Fire>
-                <Date>등록 날짜</Date>
-              </ReviewInfo>
-              <ReviewContent>
-                <MenuBox>
-                  <Menu>음식 메뉴 1</Menu>
-                  <Menu>음식 메뉴 1</Menu>
-                </MenuBox>
-                <Review>
-                  식당에서 먹은 거 있으면 코멘트 달고 없으면 어쩌구저쩌구
-                </Review>
-              </ReviewContent>
-            </ReviewBox>
-            <ReviewBox>
-              <UserInfo>
-                <UserChar>
-                  <Profile />
-                </UserChar>
-                <UserBox>
-                  <UserId>사용자 아이디</UserId>
-                  <UserCharName>맵기 검사 캐릭터</UserCharName>
-                </UserBox>
-              </UserInfo>
-              <ReviewInfo>
-                <Fire>불점 5개</Fire>
-                <Date>등록 날짜</Date>
-              </ReviewInfo>
-              <ReviewContent>
-                <MenuBox>
-                  <Menu>음식 메뉴 1</Menu>
-                  <Menu>음식 메뉴 1</Menu>
-                </MenuBox>
-                <Review>
-                  식당에서 먹은 거 있으면 코멘트 달고 없으면 어쩌구저쩌구
-                </Review>
-              </ReviewContent>
-            </ReviewBox>
+            {data.map((review, index) => (
+              <ReviewBox>
+                <UserInfo>
+                  <UserChar>
+                    <Profile />
+                    {/* {<img src={characterMyPageImage} alt="Character" />} */}
+                  </UserChar>
+                  <UserBox>
+                    <UserId>{review.userId}</UserId>
+                    <UserCharName>맵기 검사 캐릭터</UserCharName>
+                  </UserBox>
+                </UserInfo>
+                <ReviewInfo>
+                  <Fire>불점 {review.reviewSpicyLevel}개</Fire>
+                  <Date>등록 날짜</Date>
+                </ReviewInfo>
+                <ReviewContent>
+                  <MenuBox>
+                    {review.foodName ? (
+                      review.foodName
+                        .split(",")
+                        .map((foodName, idx) => (
+                          <MenuBox key={idx}>{foodName}</MenuBox>
+                        ))
+                    ) : (
+                      <MenuBox>메뉴 정보 없음</MenuBox>
+                    )}
+                  </MenuBox>
+                  <Review>{review.comment}</Review>
+                </ReviewContent>
+              </ReviewBox>
+            ))}
           </BoxBottom>
         </SideBox>
       </ScrollContainer>

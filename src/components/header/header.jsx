@@ -68,7 +68,7 @@ const LoginBtn = styled.button`
 
 function getTitle(isHeader) {
   switch (isHeader) {
-    case "test":
+    case ("test", "ramentest"):
       return <Title>맵기 레벨 검사</Title>;
     default:
       return null;
@@ -77,7 +77,7 @@ function getTitle(isHeader) {
 
 function getButton(isHeader) {
   switch (isHeader) {
-    case "test":
+    case ("test", "ramentest"):
       return (
         // <Link to="/test">
         <ReturnBtn>처음으로</ReturnBtn>
