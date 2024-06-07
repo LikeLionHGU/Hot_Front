@@ -26,7 +26,10 @@ const Btn = styled.button`
   margin-top: 70px;
   border: none;
   background-color: transparent;
-  cursor: pointer;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Content = styled.div`
@@ -67,6 +70,9 @@ const Answer = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 16px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ques = ["<라면>", "<마라탕>", "<불닭>", "<엽떡>"];
@@ -151,7 +157,7 @@ export default function RamenTest() {
         </LoadingContainer>
       ) : (
         <>
-          <Header />
+          <Header isHeader="ramentest" />
           <TestContainer>
             {currentIndex === 0 ? (
               <div

@@ -134,7 +134,7 @@ export default function OnLogin() {
       });
   }, [ID]);
 
-  console.log(userEmail, ID);
+  // console.log(userEmail, ID);
 
   const [formData, setFormData] = useState({
     storeId: { ID },

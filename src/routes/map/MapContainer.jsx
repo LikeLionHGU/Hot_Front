@@ -103,6 +103,7 @@ function FirePoints({ score }) {
 export default function MapContainer() {
   const [detail, setDetail] = useRecoilState(detailState);
   const [ID, setID] = useRecoilState(storeIdState);
+  const [result, setResult] = useState("");
   // console.log(detail);
 
   const toggleDetail = () => {
@@ -146,6 +147,19 @@ export default function MapContainer() {
       alert("Geolocation을 사용할 수 없습니다.");
     }
   }, []);
+  // console.log(result);
+
+  useEffect(() => {
+    if (result.getLng && result.getLat) {
+      fetch(
+        `http://223.p-e.kr:8080/get/stores?x=${result.getLng()}&y=${result.getLat()}&radius=1000`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setData(data);
+        });
+    }
+  }, [result]);
 
   const EventMarkerContainer = ({
     position,
@@ -174,7 +188,6 @@ export default function MapContainer() {
       }
     };
     // setStoreId(storeId);
-    useEffect(() => {}, []);
     // [0] - spicyLevelList, [1] - reviewCountList
     // const spicyReview = Object.values(review);
     const reviewCount = review.reviewCountList?.at(0) || 0;
@@ -188,7 +201,6 @@ export default function MapContainer() {
         position={position} // 마커를 표시할 위치
         onClick={(marker) => {
           map.panTo(marker.getPosition()); // 지도 중앙을 마커
-          // console.log(marker);
           handleIsOpen(); // 열고 닫는거
         }}
         image={{
@@ -205,7 +217,9 @@ export default function MapContainer() {
         {isOpen && (
           <InfoContainer>
             <InfoAbove>
-              <div onClick={toggleDetail}>{storeName}</div>
+              <div style={{ cursor: "pointer" }} onClick={toggleDetail}>
+                {storeName}
+              </div>
               <img
                 onClick={handleIsOpen}
                 style={{ cursor: "pointer" }}
@@ -237,7 +251,15 @@ export default function MapContainer() {
   return (
     <StyleContainer>
       <Sidebar />
-      <Map center={currentPosition} style={{ width: "100vw", height: "100vh" }}>
+      <Map
+        center={currentPosition}
+        style={{ width: "100vw", height: "100vh" }}
+        onDragEnd={(map) => {
+          const latlng = map.getCenter();
+          // console.log(latlng.getLat(), latlng.getLng());
+          setResult(latlng);
+        }}
+      >
         {data.map((value) => (
           <EventMarkerContainer
             key={`EventMarkerContainer-${value.xaxis}-${value.yaxis}`}

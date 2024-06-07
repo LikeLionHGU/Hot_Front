@@ -3,6 +3,9 @@ import Logo from "../../imgs/eng_logo.svg";
 
 import "../../assets/font.css";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { detailState } from "../../atom";
+import { useRecoilState } from "recoil";
 
 const StyleContainer = styled.div`
   width: 100%;
@@ -16,14 +19,15 @@ const StyleContainer = styled.div`
 
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 const TitleContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
   /* display: ${({ isResult }) => (isResult ? "block" : "flex")}; */
   /* margin-left: ${({ isResult }) => (isResult ? "228px" : "0")}; */
-  width: 100%;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const EngLogo = styled.img`
@@ -68,31 +72,10 @@ const LoginBtn = styled.button`
 
 function getTitle(isHeader) {
   switch (isHeader) {
-    case ("test", "ramentest"):
+    case "test":
       return <Title>맵기 레벨 검사</Title>;
-    default:
-      return null;
-  }
-}
-
-function getButton(isHeader) {
-  switch (isHeader) {
-    case ("test", "ramentest"):
-      return (
-        // <Link to="/test">
-        <ReturnBtn>처음으로</ReturnBtn>
-        // </Link>
-      );
-    case "main":
-      return (
-        <LoginBtn
-          onClick={() =>
-            (window.location.href = "http://localhost:8080/login/test")
-          }
-        >
-          로그인
-        </LoginBtn>
-      );
+    case "ramentest":
+      return <Title>맵기 레벨 검사</Title>;
     default:
       return null;
   }
@@ -100,6 +83,53 @@ function getButton(isHeader) {
 
 export default function Header({ isHeader }) {
   const isResult = isHeader === "result";
+  const [onLogin, setOnLogin] = useState();
+
+  function getButton(isHeader) {
+    switch (isHeader) {
+      case "test":
+        return (
+          // <Link to="/test">
+          <ReturnBtn>처음으로</ReturnBtn>
+          // </Link>
+        );
+      case "ramentest":
+        return (
+          // <Link to="/test">
+          <ReturnBtn>처음으로</ReturnBtn>
+          // </Link>
+        );
+      case "main":
+        return (
+          <>
+            {onLogin ? (
+              <></>
+            ) : (
+              <LoginBtn
+                onClick={() =>
+                  (window.location.href = "http://localhost:8080/login/test")
+                }
+              >
+                로그인
+              </LoginBtn>
+            )}
+          </>
+        );
+      default:
+        return null;
+    }
+  }
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/auth/mypage`, {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.email);
+        setOnLogin(data.email);
+      });
+  }, []);
 
   return (
     <StyleContainer>
