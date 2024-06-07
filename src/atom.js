@@ -1,8 +1,6 @@
-import { atom } from "recoil";
+import { atom, useRecoilState } from "recoil";
 
-export const headerState = atom({
-  key: "headerState",
-  default: {
-    header: "result",
-  },
+const detailState = atom({
+  key: "detailState",
+  default: false, // 기본값은 사이드바가 닫혀있는 상태
 });

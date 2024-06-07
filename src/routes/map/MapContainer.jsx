@@ -7,6 +7,9 @@ import FirePoint from "../../imgs/firePoint.svg";
 import NonFirePoint from "../../imgs/nonFirePoint.svg";
 import CloseImg from "../../imgs/close.svg";
 
+import { useRecoilState } from "recoil";
+import { detailState } from "../../atom";
+
 const regdata = [
   {
     storeName: "그레이스홀",
@@ -52,6 +55,9 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  font-family: Dream5;
+  font-size: 20px;
 `;
 
 const InfoAbove = styled.div`
@@ -61,6 +67,7 @@ const InfoAbove = styled.div`
 
 const InfoMiddle = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 function FirePoints({ score }) {
@@ -71,18 +78,32 @@ function FirePoints({ score }) {
   return (
     <div>
       {firePoints.map((src, index) => (
-        <img key={`fire-${index}`} src={src} alt="불점" />
+        <img
+          key={`fire-${index}`}
+          src={src}
+          alt="불점"
+          style={{ marginRight: "5px" }}
+        />
       ))}
       {nonFirePoints.map((src, index) => (
-        <img key={`nonfire-${index}`} src={src} alt="비 불점" />
+        <img
+          key={`nonfire-${index}`}
+          src={src}
+          alt="비 불점"
+          style={{ marginRight: "5px" }}
+        />
       ))}
     </div>
   );
 }
 
 export default function MapContainer() {
-  // 인포윈도우 Open 여부를 저장
-  // 현 위치 찍기. 일단 카카오 본사 위치
+  const [detail, setDetail] = useRecoilState(detailState);
+  // console.log(detail);
+
+  const toggleDetail = () => {
+    setDetail(true); // 상태를 토글하여 열림/닫힘 상태 변경
+  };
 
   const [data, setData] = useState([]);
 
@@ -137,7 +158,6 @@ export default function MapContainer() {
       setIsOpen(!isOpen);
       if (!isOpen) {
         const urlR = `http://223.p-e.kr:8080/get/store/spicy-level?storeId=${storeId}`;
-        console.log(storeId);
 
         fetch(urlR)
           .then((response) => response.json())
@@ -176,22 +196,29 @@ export default function MapContainer() {
         {isOpen && (
           <InfoContainer>
             <InfoAbove>
-              <div>{storeName}</div>
-              <img onClick={handleIsOpen} src={CloseImg} alt="닫기 표시" />
+              <div onClick={toggleDetail}>{storeName}</div>
+              <img
+                onClick={handleIsOpen}
+                style={{ cursor: "pointer" }}
+                src={CloseImg}
+                alt="닫기 표시"
+              />
             </InfoAbove>
             <InfoMiddle>
               <InfoMiddle>
                 <FirePoints score={spicyLevel} />
-                <div>리뷰 {(reviewCount || 0).toString().padStart(2, "0")}</div>
-                {/* {review.spicyLevelList.map((spicyLevel) => (
-                  <FirePoints score={spicyLevel} />
-                ))}
-                {review.reviewCountList.map((reviewCount) => (
-                  <div>{reviewCount}</div>
-                ))} */}
+                <div
+                  style={{
+                    fontSize: "12px",
+                    marginLeft: "5px",
+                    marginTop: "1px",
+                  }}
+                >
+                  리뷰 {(reviewCount || 0).toString().padStart(2, "0")}
+                </div>
               </InfoMiddle>
             </InfoMiddle>
-            <div>{localNumberAddress}</div>
+            <div style={{ fontSize: "13px" }}>{localNumberAddress}</div>
           </InfoContainer>
         )}
       </MapMarker>
@@ -201,8 +228,6 @@ export default function MapContainer() {
   return (
     <StyleContainer>
       <Sidebar />
-      {/* <SideBar /> */}
-
       <Map center={currentPosition} style={{ width: "100vw", height: "100vh" }}>
         {data.map((value) => (
           <EventMarkerContainer
