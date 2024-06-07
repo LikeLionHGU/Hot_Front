@@ -3,7 +3,7 @@ import Header from "../../components/header/header";
 
 import { ReactComponent as Wallpaper } from "../../imgs/mywall.svg";
 // import { ReactComponent as Char } from "../../imgs/charimg.svg";
-import Char from "../../imgs/charimg.svg";
+import Char from "../../imgs/nologimg.svg";
 import { ReactComponent as MyBtn } from "../../imgs/mybtn.svg";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
@@ -159,9 +159,15 @@ const MenuBox = styled.div`
 
 export default function MyPage() {
   const navigate = useNavigate();
-  const characterMyPageImage = Char;
-  const userName = ["사건은다가와아오에"];
-  const characterName = ["맵구", "맵노스", "맵물주", "위암플래너", "실비요정"];
+  const [userName, setuserName] = useState(null);
+  const [characterName, setcharacterName] = useState(null);
+  const [characterMyPageImage, setcharacterMyPageImage] = useState(null);
+  const [userSpicyLevel, setuserSpicyLevel] = useState(null);
+  const [title, settitle] = useState(null);
+  const [reviewSpicyLevel, setreviewSpicyLevel] = useState(null);
+  const [foodName, setfoodName] = useState(null);
+  const [comment, setcomment] = useState(null);
+  const [storeId, setstoreId] = useState(null);
   const [reviewList, setReviewList] = useState([]);
 
   function toTest() {
@@ -169,38 +175,41 @@ export default function MyPage() {
   }
 
   useEffect(() => {
-    const dummyData = {
-      reviewList: [
-        {
-          title: "하하",
-          comment: "추천",
-          spicyLevel: 5,
-          reviewImage: null,
-          foodName: "음식 메뉴",
-          storeId: "26546824",
-          userEmail: "22000116@handong.ac.kr",
-        },
-        {
-          title: "하하",
-          comment: "추천",
-          reviewSpicyLevel: 4,
-          reviewImage: null,
-          foodName: null,
-          storeId: "26546824",
-          userEmail: "22000116@handong.ac.kr",
-        },
-        {
-          title: "하하",
-          comment: "추천",
-          reviewSpicyLevel: 2,
-          reviewImage: null,
-          foodName: null,
-          storeId: "26546824",
-          userEmail: "22000116@handong.ac.kr",
-        },
-      ],
-    };
-    setReviewList(dummyData.reviewList);
+    fetch(`http://localhost:8080/auth/mypage/memberInfo`, {
+      redirect: "manual",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.success) {
+          setuserName(res.data.userName);
+          setcharacterName(res.data.characterName);
+          setcharacterMyPageImage(res.data.characterMyPageImage);
+          setuserSpicyLevel(res.data.userSpicyLevel);
+        }
+      })
+      .catch((error) => {
+        console.error("Error occurred while fetching:", error);
+      });
+    fetch(`http://localhost:8080/auth/mypage/reviewlist`, {
+      redirect: "manual",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.success) {
+          settitle(res.data.title);
+          setreviewSpicyLevel(res.data.reviewSpicyLevel);
+          setfoodName(res.data.foodName);
+          setcomment(res.data.comment);
+          setstoreId(res.data.storeId);
+        }
+      })
+      .catch((error) => {
+        console.error("Error occurred while fetching:", error);
+      });
   }, []);
 
   return (
@@ -214,14 +223,14 @@ export default function MyPage() {
           <ContentContainer>
             <CharContainer>
               <CharImg>
-                <img src={characterMyPageImage} />
+                <img src={characterMyPageImage || Char} alt="Character" />
                 {/* <img src={characterMyPageImage} /> */}
                 {/* <Char /> */}
               </CharImg>
               <CharText>
                 <UserId>{userName}</UserId>
                 <Level>맵기 레벨</Level>
-                <CharName>{characterName[0]}</CharName>
+                <CharName>{characterName}</CharName>
               </CharText>
               <Btn>
                 <MyBtn onClick={toTest} />
@@ -232,13 +241,13 @@ export default function MyPage() {
                 <RContent>리뷰 내역</RContent>
                 {reviewList.map((review, index) => (
                   <ReviewBox key={index}>
-                    <Name>음식점 이름 > </Name>
+                    <Name>{title} > </Name>
                     <Detail>
-                      <Fire>불점 {review.spicyLevel}개</Fire>
-                      <Date>{review.spicyLevel}</Date>
+                      <Fire>불점 {reviewSpicyLevel}개</Fire>
+                      {/* <Date>{review.spicyLevel}</Date> */}
                     </Detail>
                     <Menu>
-                      <MenuBox>{review.foodName}</MenuBox>
+                      <MenuBox>{foodName}</MenuBox>
                     </Menu>
                   </ReviewBox>
                 ))}

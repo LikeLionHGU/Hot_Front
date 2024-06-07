@@ -120,17 +120,14 @@ export default function RamenTest() {
   const isAllQuestionsAnswered = selectedNum.every((size) => size !== null);
 
   useEffect(() => {
-    fetch(`http://223.p-e.kr:8080/auth/mypage`, {
+    fetch(`http://localhost:8080/auth/mypage`, {
       redirect: "manual",
       credentials: "include",
     })
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
-        if (res.success) {
-          setUserEmail(res.data.email);
-          console.log("User Email:", res.data.email);
-        }
+        setUserEmail(res.email);
       })
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
@@ -142,29 +139,8 @@ export default function RamenTest() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigate("/result", { state: { combinedAnswers } });
+      navigate("/result", { state: { combinedAnswers, userEmail } });
     }, 4000); // 4초 동안 로딩 화면
-
-    const surveyScores = combinedAnswers.join("&surveyScore=");
-
-    fetch(
-      `http://223.p-e.kr:8080/get/survey/result?email=${userEmail}&surveyScore=${surveyScores}`,
-      {
-        redirect: "manual",
-        credentials: "include",
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.success) {
-          console.log("Survey result success");
-        }
-      })
-      .catch((error) => {
-        console.error("Error occurred while fetching:", error);
-      });
-
-    console.log(userEmail);
   };
 
   return (
