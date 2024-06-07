@@ -35,17 +35,17 @@ const Content = styled.div`
 `;
 
 const Question = styled.h1`
-  margin-top: 82px;
+  margin-top: 122px;
   color: #410a0a;
   font-size: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   font-family: Dream3;
 `;
 
 const Title = styled.div`
   font-size: 30px;
   color: #410a0a;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   font-family: Dream5;
   font-weight: bold;
 `;
