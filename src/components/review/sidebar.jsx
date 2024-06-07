@@ -1,10 +1,10 @@
 // https://ji-u.tistory.com/22
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
-import SideBar from "./mapLogo";
-import NonLogin from "../review/nonLogin";
-import OnLogin from "../review/onLogin";
-import CompleteReview from "../review/completeReview";
+import MapLogo from "./mapLogo";
+import NonLog from "./nonLogin";
+import OnLogin from "./onLogin";
+import CompleteReview from "./completeReview";
 
 import LeftArrow from "../../imgs/goLeftArrow.svg";
 import RightArrow from "../../imgs/goRightArrow.svg";
@@ -56,7 +56,17 @@ const Contents = styled.div`
 const Sidebar = ({ width = 300, children }) => {
   const [isOpen, setOpen] = useState(false);
   const [xPosition, setX] = useState(width);
+  const [onLogin, setOnLogin] = useState();
   const side = useRef();
+
+  // useEffect(() => {
+  //   fetch(`http://local:8080/auth/mypage`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       // setOnLogin(data.email);
+  //     });
+  // }, []);
 
   // button 클릭 시 토글
   const toggleMenu = () => {
@@ -102,7 +112,7 @@ const Sidebar = ({ width = 300, children }) => {
         {/* <OnLogin /> 로그인 했을 때 */}
         {/* <CompleteReview/> 리뷰 작성 완료 */}
 
-        {isOpen ? <CompleteReview /> : <SideBar />}
+        {isOpen ? onLogin ? <OnLogin /> : <NonLog /> : <MapLogo />}
         <OpenBtn onClick={() => toggleMenu()}>
           {isOpen ? (
             <img src={LeftArrow} alt="" />
