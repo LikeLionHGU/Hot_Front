@@ -6,6 +6,7 @@ import MyPage from "./routes/mypage/MyPage";
 import Map from "./routes/map/MapContainer";
 import MapContainer from "./routes/map/MapContainer";
 import RamenTest from "./routes/test/RamenTest.jsx";
+import { useEffect } from "react";
 
 function App() {
   return (
