@@ -62,7 +62,7 @@ const Sidebar = ({ width = 300, children }) => {
   const side = useRef();
 
   const [detail, setDetail] = useRecoilState(detailState);
-  console.log(detail);
+  // console.log(detail);
 
   const toggleDetail = () => {
     setX(width);
@@ -80,7 +80,7 @@ const Sidebar = ({ width = 300, children }) => {
       });
     if (detail === true) {
       setX(60);
-      console.log("!");
+      // console.log("!");
     }
   }, [detail]);
 
