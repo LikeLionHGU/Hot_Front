@@ -7,19 +7,22 @@ import Map from "./routes/map/MapContainer";
 import MapContainer from "./routes/map/MapContainer";
 import RamenTest from "./routes/test/RamenTest.jsx";
 import { useEffect } from "react";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/test" element={<Test />}></Route>
-        <Route path="/ramentest" element={<RamenTest />}></Route>
-        <Route path="/result" element={<Result />}></Route>
-        <Route path="/mypage" element={<MyPage />}></Route>
-        <Route path="/map" element={<MapContainer />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/test" element={<Test />}></Route>
+          <Route path="/ramentest" element={<RamenTest />}></Route>
+          <Route path="/result" element={<Result />}></Route>
+          <Route path="/mypage" element={<MyPage />}></Route>
+          <Route path="/map" element={<MapContainer />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }
 
