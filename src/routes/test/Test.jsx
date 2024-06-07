@@ -109,7 +109,7 @@ export default function Main() {
   const [selectedNum, setSelectedNum] = useState(Array(13).fill(null));
   const sizes = [1, 2, 3, 4, 5];
   const question = [
-    "1. 나는 매운 것을 먹을 때 눈에서도 땀이 난다",
+    "1. 제육 볶음을 먹을때 전혀 매움이 느껴 지지 않는다",
     "2. 청양고추도 고추장에 찍어 먹는다",
     "3. 집에 붉닭 소스가 있다",
     "4. 김치도 물에 헹궈서 먹는다",

@@ -23,6 +23,7 @@ const LoadingText = styled.div`
   align-items: center;
   font-size: 26px;
   font-family: Dream5;
+  color: #410a0a;
 `;
 
 export default function Loading() {

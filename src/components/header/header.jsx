@@ -35,7 +35,7 @@ const EngLogo = styled.img`
 `;
 
 const Title = styled.div`
-  margin-top: 5px;
+  margin-top: 13px;
 
   color: #410a0a;
   font-family: Dream5;
@@ -44,6 +44,7 @@ const Title = styled.div`
 const ReturnBtn = styled.button`
   border: 1px solid #410a0a;
   border-radius: 30px;
+  margin-top: 4px;
 
   background-color: white;
   width: 79px;

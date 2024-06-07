@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import Header from "../../components/header/header";
 
-import { ReactComponent as Wallpaper } from "../../imgs/mywall.svg";
-// import { ReactComponent as Char } from "../../imgs/charimg.svg";
-import Char from "../../imgs/nologimg.svg";
+import wallpaper from "../../imgs/mywall.jpeg";
+import { ReactComponent as Char } from "../../imgs/charimg.svg";
+// import Char from "../../imgs/nologimg.svg";
 import { ReactComponent as MyBtn } from "../../imgs/mybtn.svg";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
 const MyPageContainer = styled.div`
-  margin-top: 70px;
+  margin-top: 40px;
 `;
 
 const Wall = styled.div`
@@ -66,7 +66,7 @@ const CharName = styled.div`
 const Btn = styled.div`
   width: 228px;
   height: 58px;
-  margin-top: 104px;
+  margin-top: 80px;
 `;
 
 const ScrollContainer = styled.div`
@@ -170,23 +170,31 @@ export default function MyPage() {
   const [storeId, setstoreId] = useState(null);
   const [reviewList, setReviewList] = useState([]);
 
+  const [error, setError] = useState();
+
   function toTest() {
     navigate("/test");
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch(`http://localhost:8080/auth/mypage/memberInfo`, {
       redirect: "manual",
       credentials: "include",
     })
-      .then((res) => res.json())
+      // .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setError(null);
+        if (res.status === 500) setError("서버 에러");
+        return res.json();
+      })
       .then((res) => {
         console.log(res);
         if (res.success) {
-          setuserName(res.data.userName);
-          setcharacterName(res.data.characterName);
-          setcharacterMyPageImage(res.data.characterMyPageImage);
-          setuserSpicyLevel(res.data.userSpicyLevel);
+          setuserName(res.userName);
+          setcharacterName(res.characterName);
+          setcharacterMyPageImage(res.characterMyPageImage);
+          setuserSpicyLevel(res.userSpicyLevel);
         }
       })
       .catch((error) => {
@@ -200,17 +208,18 @@ export default function MyPage() {
       .then((res) => {
         console.log(res);
         if (res.success) {
-          settitle(res.data.title);
-          setreviewSpicyLevel(res.data.reviewSpicyLevel);
-          setfoodName(res.data.foodName);
-          setcomment(res.data.comment);
-          setstoreId(res.data.storeId);
+          settitle(res.title);
+          setreviewSpicyLevel(res.reviewSpicyLevel);
+          setfoodName(res.foodName);
+          setcomment(res.comment);
+          setstoreId(res.storeId);
         }
       })
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
       });
   }, []);
+  */
 
   return (
     <>
@@ -218,18 +227,21 @@ export default function MyPage() {
       <MyPageContainer>
         <Wall>
           <WallImg>
-            <Wallpaper />
+            {/* <Wallpaper /> */}
+            <img src={wallpaper} alt="Wallpaper" />
           </WallImg>
           <ContentContainer>
             <CharContainer>
               <CharImg>
-                <img src={characterMyPageImage || Char} alt="Character" />
+                {/* <img src={characterMyPageImage || Char} alt="Character" /> */}
                 {/* <img src={characterMyPageImage} /> */}
-                {/* <Char /> */}
+                <Char />
               </CharImg>
               <CharText>
-                <UserId>{userName}</UserId>
+                {/* <UserId>{userName}</UserId> */}
+                <UserId>유저 이름(아이디)</UserId>
                 <Level>맵기 레벨</Level>
+                <CharName>5단계 : 실비요정</CharName>
                 <CharName>{characterName}</CharName>
               </CharText>
               <Btn>
@@ -239,18 +251,23 @@ export default function MyPage() {
             <ScrollContainer>
               <Review>
                 <RContent>리뷰 내역</RContent>
-                {reviewList.map((review, index) => (
-                  <ReviewBox key={index}>
-                    <Name>{title} > </Name>
-                    <Detail>
-                      <Fire>불점 {reviewSpicyLevel}개</Fire>
-                      {/* <Date>{review.spicyLevel}</Date> */}
-                    </Detail>
-                    <Menu>
-                      <MenuBox>{foodName}</MenuBox>
-                    </Menu>
-                  </ReviewBox>
-                ))}
+                {/* {reviewList.map((review, index) => ( */}
+                {/* <ReviewBox key={index}> */}
+                <ReviewBox>
+                  <Name>음식점 이름 > </Name>
+                  {/* <Name>{title} > </Name> */}
+                  <Detail>
+                    {/* <Fire>불점 {reviewSpicyLevel}개</Fire> */}
+                    <Fire>불점 5개</Fire>
+                    {/* <Date>{review.spicyLevel}</Date> */}
+                  </Detail>
+                  <Menu>
+                    <MenuBox>메뉴 이름 1</MenuBox>
+                    <MenuBox>메뉴 이름 2</MenuBox>
+                    {/* <MenuBox>{foodName}</MenuBox> */}
+                  </Menu>
+                </ReviewBox>
+                {/* ))} */}
               </Review>
             </ScrollContainer>
           </ContentContainer>
