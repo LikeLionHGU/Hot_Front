@@ -32,6 +32,9 @@ const CharContainer = styled.div`
 
 const CharImg = styled.div`
   width: 228px;
+  height: 228px;
+  border-radius: 100%;
+  background-color: white;
   margin-top: 87px;
 `;
 
@@ -215,7 +218,13 @@ export default function MyPage() {
           <ContentContainer>
             <CharContainer>
               <CharImg>
-                {<img src={characterMyPageImage} alt="Character" />}
+                {
+                  <img
+                    src={characterMyPageImage}
+                    style={{ width: "60%", marginLeft: "45px" }}
+                    alt="Character"
+                  />
+                }
               </CharImg>
               <CharText>
                 <UserId>{userName}</UserId>
