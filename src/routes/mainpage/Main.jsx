@@ -35,6 +35,9 @@ const Btn = styled.div`
 
 const BtnBlock = styled.div`
   margin-right: 72px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 // const Ment = styled.h1`
@@ -74,7 +77,7 @@ export default function Main() {
           <BtnBlock>
             <TestBtn onClick={toTest} />
           </BtnBlock>
-          <MapBtn onClick={toMap} />
+          <MapBtn style={{ cursor: "pointer" }} onClick={toMap} />
         </Btn>
       </Body>
     </StyleContainer>

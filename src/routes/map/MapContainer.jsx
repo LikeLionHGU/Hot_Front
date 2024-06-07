@@ -186,7 +186,6 @@ export default function MapContainer() {
       }
     };
     // setStoreId(storeId);
-    useEffect(() => {}, []);
     // [0] - spicyLevelList, [1] - reviewCountList
     // const spicyReview = Object.values(review);
     const reviewCount = review.reviewCountList?.at(0) || 0;
@@ -216,7 +215,9 @@ export default function MapContainer() {
         {isOpen && (
           <InfoContainer>
             <InfoAbove>
-              <div onClick={toggleDetail}>{storeName}</div>
+              <div style={{ cursor: "pointer" }} onClick={toggleDetail}>
+                {storeName}
+              </div>
               <img
                 onClick={handleIsOpen}
                 style={{ cursor: "pointer" }}
@@ -253,7 +254,7 @@ export default function MapContainer() {
         style={{ width: "100vw", height: "100vh" }}
         onDragEnd={(map) => {
           const latlng = map.getCenter();
-          console.log(latlng.getLat(), latlng.getLng());
+          // console.log(latlng.getLat(), latlng.getLng());
           setResult(latlng);
         }}
       >

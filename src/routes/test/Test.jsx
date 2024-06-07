@@ -55,6 +55,9 @@ const Agree = styled.div`
 const Answer = styled.button`
   margin-left: 20px;
   margin-right: 20px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Img = styled.div`
@@ -103,6 +106,9 @@ const ResultBtn = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   `}
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default function Main() {
