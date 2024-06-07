@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Logo from "../../imgs/eng_logo.svg";
 
 import "../../assets/font.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { detailState } from "../../atom";
 import { useRecoilState } from "recoil";
@@ -82,17 +82,18 @@ function getTitle(isHeader) {
 }
 
 export default function Header({ isHeader }) {
+  const navigate = useNavigate();
+
+  function toMypage() {
+    navigate("/mypage");
+  }
   const isResult = isHeader === "result";
   const [onLogin, setOnLogin] = useState();
 
   function getButton(isHeader) {
     switch (isHeader) {
       case "test":
-        return (
-          // <Link to="/test">
-          <ReturnBtn>처음으로</ReturnBtn>
-          // </Link>
-        );
+        return <ReturnBtn>처음으로</ReturnBtn>;
       case "ramentest":
         return (
           // <Link to="/test">
@@ -103,7 +104,9 @@ export default function Header({ isHeader }) {
         return (
           <>
             {onLogin ? (
-              <></>
+              <>
+                <LoginBtn onClick={toMypage}>마이페이지</LoginBtn>
+              </>
             ) : (
               <LoginBtn
                 onClick={() =>

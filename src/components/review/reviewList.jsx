@@ -82,7 +82,7 @@ const StoreDetail = styled.div`
   display: flex;
   font-size: 14px;
   margin-left: 9px;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
 `;
 
 const DetailText = styled.div`
@@ -138,11 +138,18 @@ const UserChar = styled.div`
   border: 1px solid #410a0a;
 `;
 
-const UserId = styled.div`
+const UserName = styled.div`
   margin-bottom: 5px;
   font-family: Dream5;
   color: #410a0a;
   font-size: 14px;
+`;
+
+const UserId = styled.div`
+  margin-bottom: 5px;
+  /* font-family: Dream5; */
+  color: #410a0a;
+  font-size: 13px;
 `;
 const UserCharName = styled.div`
   color: #410a0a;
@@ -297,7 +304,13 @@ export default function ReviewList() {
           <BoxBottom>
             <ReviewTop>
               <Re>리뷰</Re>
-              <ReCount>리뷰 수</ReCount>
+
+              <ReCount>
+                {review.reviewCountList && review.reviewCountList[0]}개
+              </ReCount>
+              <Writeimg />
+              {/* <WriteBtn onClick={}>리뷰 쓰기</WriteBtn> */}
+
               <Writeimg
                 style={{ cursor: "pointer" }}
                 onClick={() => {
@@ -312,6 +325,7 @@ export default function ReviewList() {
               >
                 리뷰 쓰기
               </WriteBtn>
+
             </ReviewTop>
             {Array.isArray(data) && data.length > 0 ? (
               data.map((review, index) => (
@@ -321,7 +335,8 @@ export default function ReviewList() {
                       {<img src={review.reviewUserImage} alt="Character" />}
                     </UserChar>
                     <UserBox>
-                      <UserId>{review.userId}</UserId>
+                      <UserName>{review.reviewerName}</UserName>
+                      <UserId>{review.reviewerNickName}</UserId>
                     </UserBox>
                   </UserInfo>
                   <ReviewInfo>
