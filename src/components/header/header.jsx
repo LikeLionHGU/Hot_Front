@@ -85,7 +85,9 @@ function getButton(isHeader) {
     case "main":
       return (
         <LoginBtn
-          onClick={() => (window.location.href = "http://localhost:8080/login")}
+          onClick={() =>
+            (window.location.href = "http://localhost:8080/login/test")
+          }
         >
           로그인
         </LoginBtn>
