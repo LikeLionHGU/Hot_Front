@@ -2,7 +2,7 @@ import styled from "styled-components";
 // import Font from "../../assets/font.css";
 import FirePoint from "../../imgs/firePoint.svg";
 import NonFirePoint from "../../imgs/nonFirePoint.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Sidebar = styled.div`
   position: absolute;
@@ -103,7 +103,45 @@ function FirePoints() {
     </div>
   );
 }
-export default function SideBar() {
+
+export default function OnLogin() {
+  const [formData, setFormData] = useState({
+    storeId: "",
+    userEmail: "",
+    reviewSpicyLevel: "",
+    title: "",
+    comment: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const sendData = async () => {
+    try {
+      const response = await fetch("http://223.p-e.kr:8080/post/store/review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      console.log("Success:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendData();
+  };
   return (
     <Sidebar>
       <SidebarContainer>
@@ -111,9 +149,14 @@ export default function SideBar() {
         <GeneralText>당신의 불점은?</GeneralText>
         <FirePoints />
         <GeneralText>어떤 음식을 드셨나요?</GeneralText>
-        <InputContent placeholder="음식은 맛있으셨나요?" rows={"3"} />
+        <InputContent
+          value={formData.title}
+          placeholder="음식은 맛있으셨나요?"
+          rows={"3"}
+        />
         <GeneralText>어떤 점이 좋았나요?(선택)</GeneralText>
         <InputContent
+          value={formData.comment}
           placeholder="식당을 이용하면서 좋았던 점이나 개선할 점이 있다면 남겨주세요."
           rows={"7"}
         />
