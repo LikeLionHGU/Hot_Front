@@ -233,7 +233,7 @@ export default function MyPage() {
                 <RContent>리뷰 내역</RContent>
                 {data.map((review, index) => (
                   <ReviewBox key={index}>
-                    <Name>{review.title} > </Name>
+                    <Name>{review.title} </Name>
                     <Detail>
                       <Fire>불점 {review.reviewSpicyLevel}개</Fire>
                     </Detail>

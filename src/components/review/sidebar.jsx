@@ -5,6 +5,7 @@ import MapLogo from "./mapLogo";
 import NonLog from "./nonLogin";
 import OnLogin from "./onLogin";
 import CompleteReview from "./completeReview";
+import ReviewList from "./reviewList";
 
 import LeftArrow from "../../imgs/goLeftArrow.svg";
 import RightArrow from "../../imgs/goRightArrow.svg";
@@ -127,8 +128,8 @@ const Sidebar = ({ width = 300, children }) => {
         {/* <NonLogin/> 로그인이 안됐을 때 */}
         {/* <OnLogin /> 로그인 했을 때 */}
         {/* <CompleteReview/> 리뷰 작성 완료 */}
-
-        {detail ? onLogin ? <OnLogin /> : <NonLog /> : <MapLogo />}
+        {/* <ReviewList/> 리뷰 보여주기 */}
+        {detail ? onLogin ? <ReviewList /> : <NonLog /> : <MapLogo />}
         {detail ? (
           <OpenBtn onClick={() => toggleMenu()}>
             <img src={LeftArrow} alt="" />

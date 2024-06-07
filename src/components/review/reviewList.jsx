@@ -2,19 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import CharacterLogo from "../imgs/characterLogo.svg";
-import { ReactComponent as Spotimg } from "../imgs/spotimg.svg";
-import { ReactComponent as Phoneimg } from "../imgs/phoneimg.svg";
-import { ReactComponent as Clockimg } from "../imgs/clockimg.svg";
-import { ReactComponent as Writeimg } from "../imgs/writeimg.svg";
-import { ReactComponent as Profile } from "../imgs/profile.svg";
-import FirePoint from "../imgs/firePoint.svg";
-import NonFirePoint from "../imgs/nonFirePoint.svg";
+// import CharacterLogo from "../imgs/characterLogo.svg";
+import { ReactComponent as Spotimg } from "../../imgs/spotimg.svg";
+import { ReactComponent as Phoneimg } from "../../imgs/phoneimg.svg";
+import { ReactComponent as Clockimg } from "../../imgs/clockimg.svg";
+import { ReactComponent as Writeimg } from "../../imgs/writeimg.svg";
+// import { ReactComponent as Profile } from "../../imgs/profile.svg";
+import FirePoint from "../../imgs/firePoint.svg";
+import NonFirePoint from "../../imgs/nonFirePoint.svg";
+
+import { useRecoilState } from "recoil";
+import { storeIdState } from "../../atom";
 
 const ScrollContainer = styled.div`
   overflow: scroll;
 
-  width: 372px;
+  /* width: 372px; */
   height: 750px;
 
   &::-webkit-scrollbar {
@@ -45,6 +48,7 @@ const Sidebar = styled.div`
 const SideBox = styled.div`
   /* width: 372px; */
   height: 100%;
+  margin-bottom: 30px;
   /* border: 1px solid black; */
 `;
 
@@ -52,25 +56,6 @@ const Character = styled.img`
   width: 28px;
   height: 48px;
 `;
-
-const score = 3;
-
-function FirePoints({ score }) {
-  const totalPoints = 5;
-  const firePoints = Array(score).fill(FirePoint);
-  const nonFirePoints = Array(totalPoints - score).fill(NonFirePoint);
-
-  return (
-    <div>
-      {firePoints.map((src, index) => (
-        <img key={`fire-${index}`} src={src} alt="불점" />
-      ))}
-      {nonFirePoints.map((src, index) => (
-        <img key={`nonfire-${index}`} src={src} alt="비 불점" />
-      ))}
-    </div>
-  );
-}
 
 const BoxTop = styled.div`
   border-bottom: 1px solid #e2dddd;
@@ -145,7 +130,13 @@ const UserBox = styled.div`
   margin-left: 10px;
   margin-top: 5px;
 `;
-const UserChar = styled.div``;
+const UserChar = styled.div`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #410a0a;
+`;
+
 const UserId = styled.div`
   margin-bottom: 5px;
   font-family: Dream5;
@@ -192,26 +183,57 @@ const Review = styled.div`
   font-size: 13px;
 `;
 
-export default function SideBar() {
-  const [storeId, setStoreId] = useState();
-  const [storeName, setStoreName] = useState();
-  const [localNumberAddress, setLocalNumberAddress] = useState();
-  const [phoneNumber, setphoneNumber] = useState();
-  const [xaxis, setXaxis] = useState();
-  const [yaxis, setYaxis] = useState();
-  const [data, setData] = useState();
+function FirePoints({ score }) {
+  const totalPoints = 5;
+  const firePoints = Array(Math.ceil(score)).fill(FirePoint);
+  const nonFirePoints = Array(totalPoints - Math.ceil(score)).fill(
+    NonFirePoint
+  );
+
+  return (
+    <div>
+      {firePoints.map((src, index) => (
+        <img
+          key={`fire-${index}`}
+          src={src}
+          alt="불점"
+          style={{ marginRight: "5px" }}
+        />
+      ))}
+      {nonFirePoints.map((src, index) => (
+        <img
+          key={`nonfire-${index}`}
+          src={src}
+          alt="비 불점"
+          style={{ marginRight: "5px" }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export default function ReviewList() {
+  const [data, setData] = useState([]);
+  const [storeName, setStoreName] = useState("");
+  const [localNumberAddress, setLocalNumberAddress] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
+
+  const [ID, setID] = useRecoilState(storeIdState);
+  const [review, setReview] = useState({});
+  // console.log(ID);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/get/stores/detail?${storeId}`, {
+    fetch(`http://223.p-e.kr:8080/get/stores/detail?storeId=${ID}`, {
       redirect: "manual",
-      credentials: "include",
+      // credentials: "include",
     })
       .then((res) => res.json())
       .then((res) => {
-        setStoreId(res.storeId);
+        // setID(res.ID);
         setStoreName(res.storeName);
         setLocalNumberAddress(res.localNumberAddress);
         setphoneNumber(res.phoneNumber);
+        // console.log(res);
       })
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
@@ -219,18 +241,32 @@ export default function SideBar() {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/get/stores/reivewList?${storeId}`, {
+    fetch(`http://localhost:8080/get/store/reviewList?storeId=${ID}`, {
       redirect: "manual",
-      credentials: "include",
+      // credentials: "include",
     })
       .then((res) => res.json())
       .then((res) => {
         setData(res);
+        console.log(res);
       })
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
       });
-  }, []);
+  }, [ID]);
+
+  useEffect(() => {
+    fetch(`http://223.p-e.kr:8080/get/store/spicy-level?storeId=${ID}`, {
+      redirect: "manual",
+      // credentials: "include",
+    })
+      .then((review) => review.json())
+      .then((review) => {
+        setReview(review);
+      });
+  }, [ID]);
+
+  const spicyLevel = review.spicyLevelList?.at(0) || 0;
 
   return (
     <>
@@ -242,7 +278,7 @@ export default function SideBar() {
         <SideBox>
           <BoxTop>
             <StoreName>{storeName}</StoreName>
-            <FirePoints score={score} />
+            <FirePoints score={spicyLevel} />
           </BoxTop>
           <BoxMid>
             <StoreDetail>
@@ -251,52 +287,49 @@ export default function SideBar() {
             </StoreDetail>
             <StoreDetail>
               <Phoneimg />
-              <DetailText>식당 영업중 • 영업시간</DetailText>
-            </StoreDetail>
-            <StoreDetail>
-              <Clockimg />
               <DetailText>{phoneNumber}</DetailText>
+              {/* <DetailText>식당 영업중 • 영업시간</DetailText> */}
             </StoreDetail>
+            <StoreDetail>{/* <Clockimg /> */}</StoreDetail>
           </BoxMid>
           <BoxBottom>
             <ReviewTop>
               <Re>리뷰</Re>
               <ReCount>리뷰 수</ReCount>
               <Writeimg />
-              <WriteBtn>리뷰 쓰기</WriteBtn>
+              {/* <WriteBtn onClick={}>리뷰 쓰기</WriteBtn> */}
             </ReviewTop>
-            {data.map((review, index) => (
-              <ReviewBox>
-                <UserInfo>
-                  <UserChar>
-                    <Profile />
-                    {/* {<img src={characterMyPageImage} alt="Character" />} */}
-                  </UserChar>
-                  <UserBox>
-                    <UserId>{review.userId}</UserId>
-                    <UserCharName>맵기 검사 캐릭터</UserCharName>
-                  </UserBox>
-                </UserInfo>
-                <ReviewInfo>
-                  <Fire>불점 {review.reviewSpicyLevel}개</Fire>
-                  <Date>등록 날짜</Date>
-                </ReviewInfo>
-                <ReviewContent>
-                  <MenuBox>
-                    {review.foodName ? (
-                      review.foodName
-                        .split(",")
-                        .map((foodName, idx) => (
-                          <MenuBox key={idx}>{foodName}</MenuBox>
-                        ))
-                    ) : (
-                      <MenuBox>메뉴 정보 없음</MenuBox>
-                    )}
-                  </MenuBox>
-                  <Review>{review.comment}</Review>
-                </ReviewContent>
-              </ReviewBox>
-            ))}
+            {Array.isArray(data) && data.length > 0 ? (
+              data.map((review, index) => (
+                <ReviewBox key={index}>
+                  <UserInfo>
+                    <UserChar>
+                      {<img src={review.reviewUserImage} alt="Character" />}
+                    </UserChar>
+                    <UserBox>
+                      <UserId>{review.userId}</UserId>
+                    </UserBox>
+                  </UserInfo>
+                  <ReviewInfo>
+                    <Fire>불점 {review.reviewSpicyLevel}개</Fire>
+                  </ReviewInfo>
+                  <ReviewContent>
+                    <MenuBox>
+                      {review.title ? (
+                        review.title
+                          .split(",")
+                          .map((title, idx) => <Menu key={idx}>{title}</Menu>)
+                      ) : (
+                        <Menu>메뉴 정보 없음</Menu>
+                      )}
+                    </MenuBox>
+                    <Review>{review.comment}</Review>
+                  </ReviewContent>
+                </ReviewBox>
+              ))
+            ) : (
+              <></>
+            )}
           </BoxBottom>
         </SideBox>
       </ScrollContainer>

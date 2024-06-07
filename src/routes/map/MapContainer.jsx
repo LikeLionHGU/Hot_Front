@@ -73,8 +73,10 @@ const InfoMiddle = styled.div`
 
 function FirePoints({ score }) {
   const totalPoints = 5;
-  const firePoints = Array(score).fill(FirePoint);
-  const nonFirePoints = Array(totalPoints - score).fill(NonFirePoint);
+  const firePoints = Array(Math.ceil(score)).fill(FirePoint);
+  const nonFirePoints = Array(totalPoints - Math.ceil(score)).fill(
+    NonFirePoint
+  );
 
   return (
     <div>
