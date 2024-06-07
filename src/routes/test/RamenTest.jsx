@@ -126,7 +126,7 @@ export default function RamenTest() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setUserEmail(res.email);
       })
       .catch((error) => {

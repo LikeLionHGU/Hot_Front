@@ -4,6 +4,9 @@ import FirePoint from "../../imgs/firePoint.svg";
 import NonFirePoint from "../../imgs/nonFirePoint.svg";
 import { useEffect, useState } from "react";
 
+import { useRecoilState } from "recoil";
+import { storeIdState } from "../../atom";
+
 const Sidebar = styled.div`
   position: absolute;
   display: flex;
@@ -105,9 +108,37 @@ function FirePoints() {
 }
 
 export default function OnLogin() {
+  const [ID, setID] = useRecoilState(storeIdState);
+  const [userEmail, setUserEmail] = useState(null);
+  const [detail, setDetail] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/auth/mypage`, {
+      redirect: "manual",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        setUserEmail(res.email);
+      })
+      .catch((error) => {
+        console.error("Error occurred while fetching:", error);
+      });
+    console.log(ID);
+    fetch(`http://223.p-e.kr:8080/get/stores/detail?storeId=${ID}`)
+      .then((response) => response.json())
+      .then((detailStore) => {
+        // console.log(detailStore);
+        setDetail(detailStore);
+      });
+  }, [ID]);
+
+  // console.log(email);
+
   const [formData, setFormData] = useState({
-    storeId: "",
-    userEmail: "",
+    storeId: { ID },
+    userEmail: { userEmail },
     reviewSpicyLevel: "",
     title: "",
     comment: "",
@@ -120,11 +151,12 @@ export default function OnLogin() {
       [name]: value,
     });
   };
-
   const sendData = async () => {
     try {
-      const response = await fetch("http://223.p-e.kr:8080/post/store/review", {
+      const response = await fetch("http://localhost:8080/post/store/review", {
         method: "POST",
+        redirect: "manual",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -142,27 +174,36 @@ export default function OnLogin() {
     e.preventDefault();
     sendData();
   };
+
   return (
     <Sidebar>
       <SidebarContainer>
-        <Name>식당이름</Name>
+        <Name>{detail ? detail.storeName : ""}</Name>
         <GeneralText>당신의 불점은?</GeneralText>
-        <FirePoints />
+        <FirePoints
+          setReviewSpicyLevel={(level) =>
+            setFormData({ ...formData, reviewSpicyLevel: level })
+          }
+        />
         <GeneralText>어떤 음식을 드셨나요?</GeneralText>
         <InputContent
+          name="title"
           value={formData.title}
+          onChange={handleChange}
           placeholder="음식은 맛있으셨나요?"
           rows={"3"}
         />
         <GeneralText>어떤 점이 좋았나요?(선택)</GeneralText>
         <InputContent
+          name="comment"
           value={formData.comment}
+          onChange={handleChange}
           placeholder="식당을 이용하면서 좋았던 점이나 개선할 점이 있다면 남겨주세요."
           rows={"7"}
         />
         <TwoBtn>
           <CancelReview>취소</CancelReview>
-          <SubmitReview>등록</SubmitReview>
+          <SubmitReview onClick={handleSubmit}>등록</SubmitReview>
         </TwoBtn>
       </SidebarContainer>
     </Sidebar>
