@@ -5,25 +5,6 @@ import styled from "styled-components";
 import Fade from "../../components/fade";
 import Font from "../../assets/font.css";
 
-import MaepguSmall from "../../imgs/maepgu_small.svg";
-import MaepguBig from "../../imgs/maepgu_big.svg";
-import MaepguBack from "../../imgs/maepgu_back.svg";
-
-import MaepnoseSmall from "../../imgs/maepnose_small.svg";
-import MaepnoseBig from "../../imgs/maepnose_big.svg";
-import MaepnoseBack from "../../imgs/maepnose_back.svg";
-
-import MaepmuljuSmall from "../../imgs/maepmulju_small.svg";
-import MaepmuljuBig from "../../imgs/maepmulju_big.svg";
-import MaepmuljuBack from "../../imgs/maepmulju_back.svg";
-
-import WiamplannerSmall from "../../imgs/wiamplanner_small.svg";
-import WiamplannerBig from "../../imgs/wiamplanner_big.svg";
-import WiamplannerBack from "../../imgs/wiamplanner_back.svg";
-
-import SlibiFairySmall from "../../imgs/silbifairy_small.svg";
-import SlibiFairyBig from "../../imgs/silbifairy_big.svg";
-import SlibiFairyBack from "../../imgs/silbifairy_back.svg";
 import SlibiFairyBackground from "../../imgs/silbifairy_background.svg";
 
 import DownArrow from "../../imgs/downArrow.svg";
@@ -163,7 +144,6 @@ const BackImage = styled(Image)`
 `;
 
 export default function TestResult() {
-  // const url = `http://223.p-e.kr:8080/get/survey/result`;
   const [data, setData] = useState([]);
 
   const location = useLocation();
