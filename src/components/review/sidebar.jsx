@@ -11,6 +11,8 @@ import LeftArrow from "../../imgs/goLeftArrow.svg";
 import RightArrow from "../../imgs/goRightArrow.svg";
 import { useRecoilState } from "recoil";
 import { detailState } from "../../atom";
+import { reviewState } from "../../atom";
+import { completeReviewState } from "../../atom";
 
 const Container = styled.div`
   background-color: white;
@@ -61,6 +63,9 @@ const Sidebar = ({ width = 300, children }) => {
   const [xPosition, setX] = useState(width);
   const [onLogin, setOnLogin] = useState();
   const side = useRef();
+  const [reviewUiState, setReviewUiState] = useRecoilState(reviewState);
+  const [completeReview, setCompleteReview] =
+    useRecoilState(completeReviewState);
 
   const [detail, setDetail] = useRecoilState(detailState);
   // console.log(detail);
@@ -113,6 +118,19 @@ const Sidebar = ({ width = 300, children }) => {
   //   };
   // });
 
+  const pleaseWork = () => {
+    if (reviewUiState) {
+      if (completeReview) {
+        return <CompleteReview />;
+      }
+      return <OnLogin />;
+    } else {
+      return <ReviewList />;
+    }
+  };
+
+  console.log(reviewUiState, completeReview);
+
   return (
     // container
     <Container>
@@ -129,7 +147,7 @@ const Sidebar = ({ width = 300, children }) => {
         {/* <OnLogin /> 로그인 했을 때 */}
         {/* <CompleteReview/> 리뷰 작성 완료 */}
         {/* <ReviewList/> 리뷰 보여주기 */}
-        {detail ? onLogin ? <ReviewList /> : <NonLog /> : <MapLogo />}
+        {detail ? onLogin ? pleaseWork() : <NonLog /> : <MapLogo />}
         {detail ? (
           <OpenBtn onClick={() => toggleMenu()}>
             <img src={LeftArrow} alt="" />

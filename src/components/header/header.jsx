@@ -126,12 +126,14 @@ export default function Header({ isHeader }) {
   useEffect(() => {
     fetch(`http://localhost:8080/auth/mypage`, {
       credentials: "include",
+      redirect: "manual",
     })
       .then((response) => response.json())
       .then((data) => {
         // console.log(data.email);
         setOnLogin(data.email);
-      });
+      })
+      .catch((e) => console.log(e));
   }, []);
 
   return (

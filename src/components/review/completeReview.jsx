@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 import CharacterLogo from "../../imgs/completeReview.svg";
 import Font from "../../assets/font.css";
+import { reviewState } from "../../atom";
+import { completeReviewState } from "../../atom";
+import { useRecoilState } from "recoil";
 
 const Sidebar = styled.div`
   position: absolute;
@@ -38,11 +41,26 @@ const CheckBtn = styled.button`
 `;
 
 export default function CompleteReview() {
+  const [reviewUiState, setReviewUiState] = useRecoilState(reviewState);
+  const [completeReview, setCompleteReview] =
+    useRecoilState(completeReviewState);
+
   return (
     <Sidebar>
       <SidebarContainer>
         <Character src={CharacterLogo} alt="캐릭터 로고" />
-        <CheckBtn>확인</CheckBtn>
+        <CheckBtn
+          onClick={
+            (() => {
+              setReviewUiState(false);
+            },
+            () => {
+              setCompleteReview(false);
+            })
+          }
+        >
+          확인
+        </CheckBtn>
       </SidebarContainer>
     </Sidebar>
   );

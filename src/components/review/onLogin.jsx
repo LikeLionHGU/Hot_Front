@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 
 import { useRecoilState } from "recoil";
 import { storeIdState } from "../../atom";
+import { reviewState } from "../../atom";
+import { completeReviewState } from "../../atom";
 
 const Sidebar = styled.div`
   position: absolute;
@@ -26,6 +28,7 @@ const SidebarContainer = styled.div`
 
 const Name = styled.div`
   font-size: 28px;
+  text-align: center;
 `;
 
 const GeneralText = styled.div`
@@ -51,7 +54,7 @@ const InputContent = styled.textarea`
 const TwoBtn = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 80px;
+  margin-top: 50px;
   width: 100%;
 `;
 
@@ -112,6 +115,9 @@ export default function OnLogin() {
   const [ID, setID] = useRecoilState(storeIdState);
   const [userEmail, setUserEmail] = useState(null);
   const [detail, setDetail] = useState(null);
+  const [reviewUiState, setReviewUiState] = useRecoilState(reviewState);
+  const [completeReview, setCompleteReview] =
+    useRecoilState(completeReviewState);
 
   useEffect(() => {
     fetch(`http://localhost:8080/auth/mypage`, {
@@ -179,7 +185,6 @@ export default function OnLogin() {
     e.preventDefault();
     sendData();
   };
-
   return (
     <Sidebar>
       <SidebarContainer>
@@ -207,8 +212,23 @@ export default function OnLogin() {
           rows={"7"}
         />
         <TwoBtn>
-          <CancelReview>취소</CancelReview>
-          <SubmitReview onClick={handleSubmit}>등록</SubmitReview>
+          <CancelReview
+            onClick={() => {
+              setReviewUiState(false);
+            }}
+          >
+            취소
+          </CancelReview>
+          <SubmitReview
+            onClick={
+              (handleSubmit,
+              () => {
+                setCompleteReview(true);
+              })
+            }
+          >
+            등록
+          </SubmitReview>
         </TwoBtn>
       </SidebarContainer>
     </Sidebar>

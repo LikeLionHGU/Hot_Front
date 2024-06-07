@@ -12,6 +12,7 @@ import FirePoint from "../../imgs/firePoint.svg";
 import NonFirePoint from "../../imgs/nonFirePoint.svg";
 
 import { useRecoilState } from "recoil";
+import { reviewState } from "../../atom";
 import { storeIdState } from "../../atom";
 
 const ScrollContainer = styled.div`
@@ -226,6 +227,7 @@ export default function ReviewList() {
   const [phoneNumber, setphoneNumber] = useState("");
 
   const [ID, setID] = useRecoilState(storeIdState);
+  const [reviewUiState, setReviewUiState] = useRecoilState(reviewState);
   const [review, setReview] = useState({});
   // console.log(ID);
 
@@ -255,7 +257,7 @@ export default function ReviewList() {
       .then((res) => res.json())
       .then((res) => {
         setData(res);
-        console.log(res);
+        // console.log(res);
       })
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
@@ -302,11 +304,28 @@ export default function ReviewList() {
           <BoxBottom>
             <ReviewTop>
               <Re>리뷰</Re>
+
               <ReCount>
                 {review.reviewCountList && review.reviewCountList[0]}개
               </ReCount>
               <Writeimg />
               {/* <WriteBtn onClick={}>리뷰 쓰기</WriteBtn> */}
+
+              <Writeimg
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setReviewUiState(true);
+                }}
+              />
+              <WriteBtn
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setReviewUiState(true);
+                }}
+              >
+                리뷰 쓰기
+              </WriteBtn>
+
             </ReviewTop>
             {Array.isArray(data) && data.length > 0 ? (
               data.map((review, index) => (
