@@ -7,6 +7,9 @@ import FirePoint from "../../imgs/firePoint.svg";
 import NonFirePoint from "../../imgs/nonFirePoint.svg";
 import CloseImg from "../../imgs/close.svg";
 
+import { useRecoilState } from "recoil";
+import { detailState } from "../../atom";
+
 const regdata = [
   {
     storeName: "그레이스홀",
@@ -95,8 +98,12 @@ function FirePoints({ score }) {
 }
 
 export default function MapContainer() {
-  // 인포윈도우 Open 여부를 저장
-  // 현 위치 찍기. 일단 카카오 본사 위치
+  const [detail, setDetail] = useRecoilState(detailState);
+  // console.log(detail);
+
+  const toggleDetail = () => {
+    setDetail(true); // 상태를 토글하여 열림/닫힘 상태 변경
+  };
 
   const [data, setData] = useState([]);
 
@@ -151,7 +158,6 @@ export default function MapContainer() {
       setIsOpen(!isOpen);
       if (!isOpen) {
         const urlR = `http://223.p-e.kr:8080/get/store/spicy-level?storeId=${storeId}`;
-        console.log(storeId);
 
         fetch(urlR)
           .then((response) => response.json())
@@ -190,7 +196,7 @@ export default function MapContainer() {
         {isOpen && (
           <InfoContainer>
             <InfoAbove>
-              {/* <div onClick={handleSidebar}>{storeName}</div> */}
+              <div onClick={toggleDetail}>{storeName}</div>
               <img
                 onClick={handleIsOpen}
                 style={{ cursor: "pointer" }}
