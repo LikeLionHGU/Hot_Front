@@ -41,7 +41,13 @@ export default function NonLogin() {
     <Sidebar>
       <SidebarContainer>
         <Character src={CharacterLogo} alt="캐릭터 로고" />
-        <LoginBtn>로그인</LoginBtn>
+        <LoginBtn
+          onClick={() =>
+            (window.location.href = "http://localhost:8080/login/test")
+          }
+        >
+          로그인
+        </LoginBtn>
       </SidebarContainer>
     </Sidebar>
   );
