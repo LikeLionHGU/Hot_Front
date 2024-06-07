@@ -8,6 +8,7 @@ import CompleteReview from "./completeReview";
 
 import LeftArrow from "../../imgs/goLeftArrow.svg";
 import RightArrow from "../../imgs/goRightArrow.svg";
+import { useRecoilState } from "recoil";
 
 const Container = styled.div`
   background-color: white;
@@ -59,8 +60,12 @@ const Sidebar = ({ width = 300, children }) => {
   const [onLogin, setOnLogin] = useState();
   const side = useRef();
 
+  // const [detail, setDetail] = useRecoilState(detailState);
+  const toggleDetail = () => {
+    // setDetail(!detail); // 상태를 토글하여 열림/닫힘 상태 변경
+  };
   // useEffect(() => {
-  //   fetch(`http://local:8080/auth/mypage`)
+  //   fetch(`http://localhost:8080/auth/mypage`)
   //     .then((response) => response.json())
   //     .then((data) => {
   //       console.log(data);

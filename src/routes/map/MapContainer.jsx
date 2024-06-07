@@ -52,6 +52,9 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  font-family: Dream5;
+  font-size: 20px;
 `;
 
 const InfoAbove = styled.div`
@@ -61,6 +64,7 @@ const InfoAbove = styled.div`
 
 const InfoMiddle = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 function FirePoints({ score }) {
@@ -71,10 +75,20 @@ function FirePoints({ score }) {
   return (
     <div>
       {firePoints.map((src, index) => (
-        <img key={`fire-${index}`} src={src} alt="불점" />
+        <img
+          key={`fire-${index}`}
+          src={src}
+          alt="불점"
+          style={{ marginRight: "5px" }}
+        />
       ))}
       {nonFirePoints.map((src, index) => (
-        <img key={`nonfire-${index}`} src={src} alt="비 불점" />
+        <img
+          key={`nonfire-${index}`}
+          src={src}
+          alt="비 불점"
+          style={{ marginRight: "5px" }}
+        />
       ))}
     </div>
   );
@@ -176,22 +190,29 @@ export default function MapContainer() {
         {isOpen && (
           <InfoContainer>
             <InfoAbove>
-              <div>{storeName}</div>
-              <img onClick={handleIsOpen} src={CloseImg} alt="닫기 표시" />
+              {/* <div onClick={handleSidebar}>{storeName}</div> */}
+              <img
+                onClick={handleIsOpen}
+                style={{ cursor: "pointer" }}
+                src={CloseImg}
+                alt="닫기 표시"
+              />
             </InfoAbove>
             <InfoMiddle>
               <InfoMiddle>
                 <FirePoints score={spicyLevel} />
-                <div>리뷰 {(reviewCount || 0).toString().padStart(2, "0")}</div>
-                {/* {review.spicyLevelList.map((spicyLevel) => (
-                  <FirePoints score={spicyLevel} />
-                ))}
-                {review.reviewCountList.map((reviewCount) => (
-                  <div>{reviewCount}</div>
-                ))} */}
+                <div
+                  style={{
+                    fontSize: "12px",
+                    marginLeft: "5px",
+                    marginTop: "1px",
+                  }}
+                >
+                  리뷰 {(reviewCount || 0).toString().padStart(2, "0")}
+                </div>
               </InfoMiddle>
             </InfoMiddle>
-            <div>{localNumberAddress}</div>
+            <div style={{ fontSize: "13px" }}>{localNumberAddress}</div>
           </InfoContainer>
         )}
       </MapMarker>
@@ -201,8 +222,6 @@ export default function MapContainer() {
   return (
     <StyleContainer>
       <Sidebar />
-      {/* <SideBar /> */}
-
       <Map center={currentPosition} style={{ width: "100vw", height: "100vh" }}>
         {data.map((value) => (
           <EventMarkerContainer
