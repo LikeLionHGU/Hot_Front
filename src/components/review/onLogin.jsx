@@ -2,7 +2,10 @@ import styled from "styled-components";
 // import Font from "../../assets/font.css";
 import FirePoint from "../../imgs/firePoint.svg";
 import NonFirePoint from "../../imgs/nonFirePoint.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useRecoilState } from "recoil";
+import { storeIdState } from "../../atom";
 
 const Sidebar = styled.div`
   position: absolute;
@@ -104,10 +107,38 @@ function FirePoints() {
   );
 }
 
-export default function SideBar() {
+export default function OnLogin() {
+  const [ID, setID] = useRecoilState(storeIdState);
+  const [userEmail, setUserEmail] = useState(null);
+  const [detail, setDetail] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/auth/mypage`, {
+      redirect: "manual",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        setUserEmail(res.email);
+      })
+      .catch((error) => {
+        console.error("Error occurred while fetching:", error);
+      });
+    console.log(ID);
+    fetch(`http://223.p-e.kr:8080/get/stores/detail?storeId=${ID}`)
+      .then((response) => response.json())
+      .then((detailStore) => {
+        // console.log(detailStore);
+        setDetail(detailStore);
+      });
+  }, [ID]);
+
+  // console.log(email);
+
   const [formData, setFormData] = useState({
-    storeId: "",
-    userEmail: "",
+    storeId: { ID },
+    userEmail: { userEmail },
     reviewSpicyLevel: "",
     title: "",
     comment: "",
@@ -124,6 +155,8 @@ export default function SideBar() {
     try {
       const response = await fetch("http://localhost:8080/post/store/review", {
         method: "POST",
+        redirect: "manual",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -145,7 +178,7 @@ export default function SideBar() {
   return (
     <Sidebar>
       <SidebarContainer>
-        <Name>식당이름</Name>
+        <Name>{detail ? detail.storeName : ""}</Name>
         <GeneralText>당신의 불점은?</GeneralText>
         <FirePoints
           setReviewSpicyLevel={(level) =>

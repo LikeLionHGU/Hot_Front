@@ -9,6 +9,7 @@ import CloseImg from "../../imgs/close.svg";
 
 import { useRecoilState } from "recoil";
 import { detailState } from "../../atom";
+import { storeIdState } from "../../atom";
 
 const regdata = [
   {
@@ -99,6 +100,7 @@ function FirePoints({ score }) {
 
 export default function MapContainer() {
   const [detail, setDetail] = useRecoilState(detailState);
+  const [ID, setID] = useRecoilState(storeIdState);
   // console.log(detail);
 
   const toggleDetail = () => {
@@ -154,8 +156,11 @@ export default function MapContainer() {
     // const [review, setReview] = useState([]);
     const [review, setReview] = useState({});
 
+    // setID({ storeId });
     const handleIsOpen = () => {
-      setIsOpen(!isOpen);
+      setID(storeId);
+      setIsOpen(!isOpen); // 리코일
+      // console.log(ID);
       if (!isOpen) {
         const urlR = `http://223.p-e.kr:8080/get/store/spicy-level?storeId=${storeId}`;
 
@@ -166,7 +171,8 @@ export default function MapContainer() {
           });
       }
     };
-
+    // setStoreId(storeId);
+    useEffect(() => {}, []);
     // [0] - spicyLevelList, [1] - reviewCountList
     // const spicyReview = Object.values(review);
     const reviewCount = review.reviewCountList?.at(0) || 0;
@@ -180,6 +186,7 @@ export default function MapContainer() {
         position={position} // 마커를 표시할 위치
         onClick={(marker) => {
           map.panTo(marker.getPosition()); // 지도 중앙을 마커
+          // console.log(marker);
           handleIsOpen(); // 열고 닫는거
         }}
         image={{

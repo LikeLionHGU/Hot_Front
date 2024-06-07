@@ -64,10 +64,10 @@ const Sidebar = ({ width = 300, children }) => {
   const [detail, setDetail] = useRecoilState(detailState);
   // console.log(detail);
 
-  const toggleDetail = () => {
-    setX(width);
-    setDetail(false); // 상태를 토글하여 열림/닫힘 상태 변경
-  };
+  // const toggleDetail = () => {
+  //   setX(width);
+  //   setDetail(false); // 상태를 토글하여 열림/닫힘 상태 변경
+  // };
 
   useEffect(() => {
     fetch(`http://localhost:8080/auth/mypage`, {
