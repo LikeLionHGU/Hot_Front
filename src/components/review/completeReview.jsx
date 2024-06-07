@@ -37,7 +37,7 @@ const CheckBtn = styled.button`
   }
 `;
 
-export default function SideBar() {
+export default function CompleteReview() {
   return (
     <Sidebar>
       <SidebarContainer>

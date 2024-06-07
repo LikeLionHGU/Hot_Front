@@ -30,9 +30,13 @@ const LoginBtn = styled.button`
   background-color: #f6b95b;
   color: #410a0a;
   font-family: Dream5;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
-export default function SideBar() {
+export default function NonLogin() {
   return (
     <Sidebar>
       <SidebarContainer>

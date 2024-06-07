@@ -15,7 +15,7 @@ const Character = styled.img`
   margin-right: 14px;
 `;
 
-export default function SideBar() {
+export default function MapLogo() {
   return (
     <Sidebar>
       <Character src={CharacterLogo} alt="캐릭터 로고" />
