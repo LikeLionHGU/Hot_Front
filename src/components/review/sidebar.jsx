@@ -10,6 +10,7 @@ import LeftArrow from "../../imgs/goLeftArrow.svg";
 import RightArrow from "../../imgs/goRightArrow.svg";
 import { useRecoilState } from "recoil";
 import { detailState } from "../../atom";
+
 const Container = styled.div`
   background-color: white;
 `;
@@ -55,15 +56,18 @@ const Contents = styled.div`
 `;
 
 const Sidebar = ({ width = 300, children }) => {
-  const [isOpen, setOpen] = useState(false);
+  // const [isOpen, setOpen] = useState(false);
   const [xPosition, setX] = useState(width);
   const [onLogin, setOnLogin] = useState();
   const side = useRef();
 
   const [detail, setDetail] = useRecoilState(detailState);
-  const toggleDetail = () => {
-    setDetail(!detail); // 상태를 토글하여 열림/닫힘 상태 변경
-  };
+  // console.log(detail);
+
+  // const toggleDetail = () => {
+  //   setX(width);
+  //   setDetail(false); // 상태를 토글하여 열림/닫힘 상태 변경
+  // };
 
   useEffect(() => {
     fetch(`http://localhost:8080/auth/mypage`, {
@@ -74,35 +78,39 @@ const Sidebar = ({ width = 300, children }) => {
         // console.log(data.email);
         setOnLogin(data.email);
       });
-  }, []);
+    if (detail === true) {
+      setX(60);
+      // console.log("!");
+    }
+  }, [detail]);
 
   // button 클릭 시 토글
   const toggleMenu = () => {
-    if (xPosition > 60) {
-      setX(60);
-      setOpen(true);
-    } else {
-      setX(width);
-      setOpen(false);
-    }
+    // if (xPosition > 60) {
+    //   setX(60);
+    //   setDetail(true);
+    // } else {
+    setX(width);
+    setDetail(false);
+    // }
   };
 
   // 사이드바 외부 클릭시 닫히는 함수
-  const handleClose = async (e) => {
-    let sideArea = side.current;
-    let sideCildren = side.current.contains(e.target);
-    if (isOpen && (!sideArea || !sideCildren)) {
-      await setX(width);
-      await setOpen(false);
-    }
-  };
+  // const handleClose = async (e) => {
+  //   let sideArea = side.current;
+  //   let sideCildren = side.current.contains(e.target);
+  //   if (detail && (!sideArea || !sideCildren)) {
+  //     await setX(width);
+  //     await setDetail(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    window.addEventListener("click", handleClose);
-    return () => {
-      window.removeEventListener("click", handleClose);
-    };
-  });
+  // useEffect(() => {
+  //   window.addEventListener("click", handleClose);
+  //   return () => {
+  //     window.removeEventListener("click", handleClose);
+  //   };
+  // });
 
   return (
     // container
@@ -120,14 +128,15 @@ const Sidebar = ({ width = 300, children }) => {
         {/* <OnLogin /> 로그인 했을 때 */}
         {/* <CompleteReview/> 리뷰 작성 완료 */}
 
-        {isOpen ? onLogin ? <OnLogin /> : <NonLog /> : <MapLogo />}
-        <OpenBtn onClick={() => toggleMenu()}>
-          {isOpen ? (
+        {detail ? onLogin ? <OnLogin /> : <NonLog /> : <MapLogo />}
+        {detail ? (
+          <OpenBtn onClick={() => toggleMenu()}>
             <img src={LeftArrow} alt="" />
-          ) : (
-            <img src={RightArrow} alt="" />
-          )}
-        </OpenBtn>
+          </OpenBtn>
+        ) : (
+          <></>
+        )}
+
         {/* content */}
         <Contents>{children}</Contents>
       </Side>
