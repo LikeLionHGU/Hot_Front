@@ -2,7 +2,7 @@ import styled from "styled-components";
 // import Font from "../../assets/font.css";
 import FirePoint from "../../imgs/firePoint.svg";
 import NonFirePoint from "../../imgs/nonFirePoint.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Sidebar = styled.div`
   position: absolute;
@@ -104,7 +104,7 @@ function FirePoints() {
   );
 }
 
-export default function OnLogin() {
+export default function SideBar() {
   const [formData, setFormData] = useState({
     storeId: "",
     userEmail: "",
@@ -120,10 +120,9 @@ export default function OnLogin() {
       [name]: value,
     });
   };
-
   const sendData = async () => {
     try {
-      const response = await fetch("http://223.p-e.kr:8080/post/store/review", {
+      const response = await fetch("http://localhost:8080/post/store/review", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,27 +141,36 @@ export default function OnLogin() {
     e.preventDefault();
     sendData();
   };
+
   return (
     <Sidebar>
       <SidebarContainer>
         <Name>식당이름</Name>
         <GeneralText>당신의 불점은?</GeneralText>
-        <FirePoints />
+        <FirePoints
+          setReviewSpicyLevel={(level) =>
+            setFormData({ ...formData, reviewSpicyLevel: level })
+          }
+        />
         <GeneralText>어떤 음식을 드셨나요?</GeneralText>
         <InputContent
+          name="title"
           value={formData.title}
+          onChange={handleChange}
           placeholder="음식은 맛있으셨나요?"
           rows={"3"}
         />
         <GeneralText>어떤 점이 좋았나요?(선택)</GeneralText>
         <InputContent
+          name="comment"
           value={formData.comment}
+          onChange={handleChange}
           placeholder="식당을 이용하면서 좋았던 점이나 개선할 점이 있다면 남겨주세요."
           rows={"7"}
         />
         <TwoBtn>
           <CancelReview>취소</CancelReview>
-          <SubmitReview>등록</SubmitReview>
+          <SubmitReview onClick={handleSubmit}>등록</SubmitReview>
         </TwoBtn>
       </SidebarContainer>
     </Sidebar>

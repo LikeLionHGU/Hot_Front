@@ -99,7 +99,7 @@ function FirePoints({ score }) {
 
 export default function MapContainer() {
   const [detail, setDetail] = useRecoilState(detailState);
-  // console.log(detail);
+  console.log(detail);
 
   const toggleDetail = () => {
     setDetail(true); // 상태를 토글하여 열림/닫힘 상태 변경
