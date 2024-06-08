@@ -243,7 +243,7 @@ export default function ReviewList() {
         setStoreName(res.storeName);
         setLocalNumberAddress(res.localNumberAddress);
         setphoneNumber(res.phoneNumber);
-        console.log(res);
+        // console.log(res);
       })
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
@@ -309,7 +309,6 @@ export default function ReviewList() {
               <ReCount>
                 {review.reviewCountList && review.reviewCountList[0]}개
               </ReCount>
-              <Writeimg />
               {/* <WriteBtn onClick={}>리뷰 쓰기</WriteBtn> */}
 
               <Writeimg

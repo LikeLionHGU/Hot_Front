@@ -129,7 +129,7 @@ const Sidebar = ({ width = 300, children }) => {
     }
   };
 
-  console.log(reviewUiState, completeReview);
+  // console.log(reviewUiState, completeReview);
 
   return (
     // container
