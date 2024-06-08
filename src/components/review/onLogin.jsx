@@ -131,7 +131,8 @@ export default function OnLogin() {
       })
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
-      });
+      })
+      .catch((e) => console.log(e));
     fetch(`http://localhost:8080/get/stores/detail?storeId=${ID}`)
       .then((response) => response.json())
       .then((detailStore) => {

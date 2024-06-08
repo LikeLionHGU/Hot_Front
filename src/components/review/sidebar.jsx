@@ -83,7 +83,8 @@ const Sidebar = ({ width = 300, children }) => {
       .then((data) => {
         // console.log(data.email);
         setOnLogin(data.email);
-      });
+      })
+      .catch((e) => console.log(e));
     if (detail === true) {
       setX(60);
       // console.log("!");

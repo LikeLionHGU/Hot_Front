@@ -137,7 +137,8 @@ export default function RamenTest() {
       })
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
-      });
+      })
+      .catch((e) => console.log(e));
   }, []);
 
   const handleResult = () => {

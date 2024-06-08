@@ -28,7 +28,7 @@ const ScrollContainer = styled.div`
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    height: 160px;
+    height: 100vh;
     background-color: #afa4a4;
   }
   &::-webkit-scrollbar-track {
