@@ -146,7 +146,7 @@ const Menu = styled.div`
 const MenuBox = styled.div`
   width: auto;
   height: 25px;
-  border: 1px solid #afa4a4;
+  /* border: 1px solid #afa4a4; */
   border-radius: 60px;
   padding-top: 12px;
   padding-left: 10px;
@@ -243,11 +243,11 @@ export default function MyPage() {
                       <Fire>불점 {review.reviewSpicyLevel}개</Fire>
                     </Detail>
                     <Menu>
-                      {review.foodName ? (
-                        review.foodName
+                      {review.comment ? (
+                        review.comment
                           .split(",")
-                          .map((foodName, idx) => (
-                            <MenuBox key={idx}>{foodName}</MenuBox>
+                          .map((comment, idx) => (
+                            <MenuBox key={idx}>{comment}</MenuBox>
                           ))
                       ) : (
                         <MenuBox>메뉴 정보 없음</MenuBox>
