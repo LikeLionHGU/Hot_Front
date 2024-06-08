@@ -50,14 +50,10 @@ export default function CompleteReview() {
       <SidebarContainer>
         <Character src={CharacterLogo} alt="캐릭터 로고" />
         <CheckBtn
-          onClick={
-            (() => {
-              setReviewUiState(false);
-            },
-            () => {
-              setCompleteReview(false);
-            })
-          }
+          onClick={() => {
+            setCompleteReview(false);
+            setReviewUiState(false);
+          }}
         >
           확인
         </CheckBtn>

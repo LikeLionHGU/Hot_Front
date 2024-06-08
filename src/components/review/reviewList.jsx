@@ -331,7 +331,13 @@ export default function ReviewList() {
                 <ReviewBox key={index}>
                   <UserInfo>
                     <UserChar>
-                      {<img src={review.reviewUserImage} alt="Character" />}
+                      {
+                        <img
+                          src={review.reviewUserImage}
+                          style={{ width: "48px", height: "48px" }}
+                          alt="Character"
+                        />
+                      }
                     </UserChar>
                     <UserBox>
                       <UserName>{review.reviewerName}</UserName>

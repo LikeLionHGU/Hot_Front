@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import CharacterLogo from "../../imgs/characterLogo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = styled.div`
   position: absolute;
@@ -13,12 +14,21 @@ const Character = styled.img`
   height: 48px;
   margin-top: 10px;
   margin-right: 14px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default function MapLogo() {
+  const navigate = useNavigate();
+
+  function toMain() {
+    navigate("/");
+  }
   return (
     <Sidebar>
-      <Character src={CharacterLogo} alt="캐릭터 로고" />
+      <Character onClick={toMain} src={CharacterLogo} alt="캐릭터 로고" />
     </Sidebar>
   );
 }
