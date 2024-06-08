@@ -45,10 +45,12 @@ const Title = styled.div`
   font-family: Dream5;
 `;
 
-const ReturnBtn = styled.button`
+const ReturnBtn = styled.a`
   border: 1px solid #410a0a;
   border-radius: 30px;
   margin-top: 4px;
+
+  text-decoration: none;
 
   background-color: white;
   width: 79px;
@@ -101,11 +103,17 @@ export default function Header({ isHeader }) {
   function getButton(isHeader) {
     switch (isHeader) {
       case "test":
-        return <ReturnBtn>처음으로</ReturnBtn>;
+        return (
+          <ReturnBtn href="/test" onClick={() => window.location.reload()}>
+            처음으로
+          </ReturnBtn>
+        );
       case "ramentest":
         return (
           // <Link to="/test">
-          <ReturnBtn>처음으로</ReturnBtn>
+          <ReturnBtn href="/test" onClick={() => window.location.reload()}>
+            처음으로
+          </ReturnBtn>
           // </Link>
         );
       case "main":
