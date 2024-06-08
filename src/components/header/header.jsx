@@ -61,6 +61,10 @@ const ReturnBtn = styled.button`
 
   color: #410a0a;
   font-family: Dream5;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const LoginBtn = styled.button`
@@ -68,6 +72,10 @@ const LoginBtn = styled.button`
   background-color: white;
   font-family: Dream5;
   font-size: 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 function getTitle(isHeader) {

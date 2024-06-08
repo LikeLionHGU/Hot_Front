@@ -200,6 +200,10 @@ export default function TestResult() {
     color: #afa4a4;
     font-size: 14px;
     font-family: Dream5;
+
+    &:hover {
+      cursor: pointer;
+    }
   `;
 
   return (
@@ -226,15 +230,28 @@ export default function TestResult() {
         </Above>
         {/* 누르는 곳을 크게 할까 말까 */}
         <TextCon>
-          <div onClick={scrollToBottom} style={{ margin: "13px" }}>
+          <div
+            onClick={scrollToBottom}
+            style={{ margin: "13px", cursor: "pointer" }}
+          >
             다른 캐릭터들 보러 가기
           </div>
         </TextCon>
-        <img onClick={scrollToBottom} src={DownArrow} alt="downarrow" />
+        <img
+          onClick={scrollToBottom}
+          src={DownArrow}
+          style={{ cursor: "pointer" }}
+          alt="downarrow"
+        />
         <Blank />
         <Fade>
           <MiddleBottom>
-            <img onClick={scrollToTop} src={UpArrow} alt="uparrow" />
+            <img
+              onClick={scrollToTop}
+              src={UpArrow}
+              style={{ cursor: "pointer" }}
+              alt="uparrow"
+            />
             <TextCon>
               <div onClick={scrollToTop} style={{ margin: "13px" }}>
                 내 캐릭터 보러 가기
