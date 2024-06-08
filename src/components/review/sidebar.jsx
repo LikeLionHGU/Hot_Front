@@ -33,7 +33,7 @@ const Side = styled.div`
 
 const OpenBtn = styled.button`
   position: relative;
-  left: 300px;
+  left: 500px;
   top: 45%;
   width: 20px;
   height: 40px;
@@ -148,6 +148,7 @@ const Sidebar = ({ width = 300, children }) => {
         {/* <CompleteReview/> 리뷰 작성 완료 */}
         {/* <ReviewList/> 리뷰 보여주기 */}
         {detail ? onLogin ? pleaseWork() : <NonLog /> : <MapLogo />}
+
         {detail ? (
           <OpenBtn onClick={() => toggleMenu()}>
             <img src={LeftArrow} alt="" />
