@@ -220,12 +220,10 @@ export default function OnLogin() {
             취소
           </CancelReview>
           <SubmitReview
-            onClick={
-              (handleSubmit,
-              () => {
-                setCompleteReview(true);
-              })
-            }
+            onClick={(e) => {
+              handleSubmit(e);
+              setCompleteReview(true);
+            }}
           >
             등록
           </SubmitReview>
