@@ -132,7 +132,7 @@ export default function OnLogin() {
       .catch((error) => {
         console.error("Error occurred while fetching:", error);
       });
-    fetch(`http://223.p-e.kr:8080/get/stores/detail?storeId=${ID}`)
+    fetch(`http://localhost:8080/get/stores/detail?storeId=${ID}`)
       .then((response) => response.json())
       .then((detailStore) => {
         // console.log(detailStore);

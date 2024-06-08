@@ -31,10 +31,6 @@ const CharContainer = styled.div`
 `;
 
 const CharImg = styled.div`
-  width: 228px;
-  height: 228px;
-  border-radius: 100%;
-  background-color: white;
   margin-top: 87px;
 `;
 
@@ -221,7 +217,7 @@ export default function MyPage() {
                 {
                   <img
                     src={characterMyPageImage}
-                    style={{ width: "60%", marginLeft: "45px" }}
+                    style={{ width: "228px", height: "228px" }}
                     alt="Character"
                   />
                 }
@@ -242,7 +238,7 @@ export default function MyPage() {
                 <RContent>리뷰 내역</RContent>
                 {data.map((review, index) => (
                   <ReviewBox key={index}>
-                    <Name>{review.title} </Name>
+                    <Name>{review.title} > </Name>
                     <Detail>
                       <Fire>불점 {review.reviewSpicyLevel}개</Fire>
                     </Detail>

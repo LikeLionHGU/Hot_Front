@@ -126,7 +126,7 @@ export default function MapContainer() {
           setCurrentPosition({ lat, lng });
 
           // const url = `http://223.p-e.kr:8080/get/stores?x=${lng}&y=${lat}&radius=10000`;
-          const url = `http://223.p-e.kr:8080/get/stores?x=${lng}&y=${lat}&radius=1000`;
+          const url = `http://localhost:8080/get/stores?x=${lng}&y=${lat}&radius=1000`;
           fetch(url)
             .then((response) => response.json())
             .then((data) => {
@@ -152,7 +152,7 @@ export default function MapContainer() {
   useEffect(() => {
     if (result.getLng && result.getLat) {
       fetch(
-        `http://223.p-e.kr:8080/get/stores?x=${result.getLng()}&y=${result.getLat()}&radius=1000`
+        `http://localhost:8080/get/stores?x=${result.getLng()}&y=${result.getLat()}&radius=1000`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -178,8 +178,7 @@ export default function MapContainer() {
       setIsOpen(!isOpen); // 리코일
       // console.log(ID);
       if (!isOpen) {
-        const urlR = `http://223.p-e.kr:8080/get/store/spicy-level?storeId=${storeId}`;
-
+        const urlR = `http://localhost:8080/get/store/spicy-level?storeId=${storeId}`;
         fetch(urlR)
           .then((response) => response.json())
           .then((review) => {

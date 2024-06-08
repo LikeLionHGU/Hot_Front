@@ -17,8 +17,8 @@ import { storeIdState } from "../../atom";
 
 const ScrollContainer = styled.div`
   overflow: scroll;
-
-  /* width: 372px; */
+  position: absolute;
+  width: 300px;
   height: 750px;
 
   &::-webkit-scrollbar {
@@ -232,12 +232,13 @@ export default function ReviewList() {
   // console.log(ID);
 
   useEffect(() => {
-    fetch(`http://223.p-e.kr:8080/get/stores/detail?storeId=${ID}`, {
+    fetch(`http://localhost:8080/get/stores/detail?storeId=${ID}`, {
       redirect: "manual",
       // credentials: "include",
     })
       .then((res) => res.json())
       .then((res) => {
+        // console.log("AAAAAAAA", res)
         // setID(res.ID);
         setStoreName(res.storeName);
         setLocalNumberAddress(res.localNumberAddress);
@@ -265,7 +266,7 @@ export default function ReviewList() {
   }, [ID]);
 
   useEffect(() => {
-    fetch(`http://223.p-e.kr:8080/get/store/spicy-level?storeId=${ID}`, {
+    fetch(`http://localhost:8080/get/store/spicy-level?storeId=${ID}`, {
       redirect: "manual",
       // credentials: "include",
     })
@@ -308,7 +309,6 @@ export default function ReviewList() {
               <ReCount>
                 {review.reviewCountList && review.reviewCountList[0]}개
               </ReCount>
-              <Writeimg />
               {/* <WriteBtn onClick={}>리뷰 쓰기</WriteBtn> */}
 
               <Writeimg
@@ -325,7 +325,6 @@ export default function ReviewList() {
               >
                 리뷰 쓰기
               </WriteBtn>
-
             </ReviewTop>
             {Array.isArray(data) && data.length > 0 ? (
               data.map((review, index) => (

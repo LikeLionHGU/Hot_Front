@@ -129,7 +129,7 @@ const Sidebar = ({ width = 300, children }) => {
     }
   };
 
-  console.log(reviewUiState, completeReview);
+  // console.log(reviewUiState, completeReview);
 
   return (
     // container
@@ -148,6 +148,7 @@ const Sidebar = ({ width = 300, children }) => {
         {/* <CompleteReview/> 리뷰 작성 완료 */}
         {/* <ReviewList/> 리뷰 보여주기 */}
         {detail ? onLogin ? pleaseWork() : <NonLog /> : <MapLogo />}
+
         {detail ? (
           <OpenBtn onClick={() => toggleMenu()}>
             <img src={LeftArrow} alt="" />
