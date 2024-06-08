@@ -17,8 +17,8 @@ import { storeIdState } from "../../atom";
 
 const ScrollContainer = styled.div`
   overflow: scroll;
-
-  /* width: 372px; */
+  position: absolute;
+  width: 300px;
   height: 750px;
 
   &::-webkit-scrollbar {
@@ -238,7 +238,7 @@ export default function ReviewList() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log("AAAAAAAA", res);
+        // console.log("AAAAAAAA", res)
         // setID(res.ID);
         setStoreName(res.storeName);
         setLocalNumberAddress(res.localNumberAddress);
@@ -284,84 +284,84 @@ export default function ReviewList() {
         <Link to="/">
           <Character src={CharacterLogo} alt="캐릭터 로고" />
         // </Link> */}
-      {/* <ScrollContainer> */}
-      <SideBox>
-        <BoxTop>
-          <StoreName>{storeName}</StoreName>
-          <FirePoints score={spicyLevel} />
-        </BoxTop>
-        <BoxMid>
-          <StoreDetail>
-            <Spotimg />
-            <DetailText>{localNumberAddress}</DetailText>
-          </StoreDetail>
-          <StoreDetail>
-            <Phoneimg />
-            <DetailText>{phoneNumber}</DetailText>
-            {/* <DetailText>식당 영업중 • 영업시간</DetailText> */}
-          </StoreDetail>
-          <StoreDetail>{/* <Clockimg /> */}</StoreDetail>
-        </BoxMid>
-        <BoxBottom>
-          <ReviewTop>
-            <Re>리뷰</Re>
+      <ScrollContainer>
+        <SideBox>
+          <BoxTop>
+            <StoreName>{storeName}</StoreName>
+            <FirePoints score={spicyLevel} />
+          </BoxTop>
+          <BoxMid>
+            <StoreDetail>
+              <Spotimg />
+              <DetailText>{localNumberAddress}</DetailText>
+            </StoreDetail>
+            <StoreDetail>
+              <Phoneimg />
+              <DetailText>{phoneNumber}</DetailText>
+              {/* <DetailText>식당 영업중 • 영업시간</DetailText> */}
+            </StoreDetail>
+            <StoreDetail>{/* <Clockimg /> */}</StoreDetail>
+          </BoxMid>
+          <BoxBottom>
+            <ReviewTop>
+              <Re>리뷰</Re>
 
-            <ReCount>
-              {review.reviewCountList && review.reviewCountList[0]}개
-            </ReCount>
-            <Writeimg />
-            {/* <WriteBtn onClick={}>리뷰 쓰기</WriteBtn> */}
+              <ReCount>
+                {review.reviewCountList && review.reviewCountList[0]}개
+              </ReCount>
+              <Writeimg />
+              {/* <WriteBtn onClick={}>리뷰 쓰기</WriteBtn> */}
 
-            <Writeimg
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                setReviewUiState(true);
-              }}
-            />
-            <WriteBtn
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                setReviewUiState(true);
-              }}
-            >
-              리뷰 쓰기
-            </WriteBtn>
-          </ReviewTop>
-          {Array.isArray(data) && data.length > 0 ? (
-            data.map((review, index) => (
-              <ReviewBox key={index}>
-                <UserInfo>
-                  <UserChar>
-                    {<img src={review.reviewUserImage} alt="Character" />}
-                  </UserChar>
-                  <UserBox>
-                    <UserName>{review.reviewerName}</UserName>
-                    <UserId>{review.reviewerNickName}</UserId>
-                  </UserBox>
-                </UserInfo>
-                <ReviewInfo>
-                  <Fire>불점 {review.reviewSpicyLevel}개</Fire>
-                </ReviewInfo>
-                <ReviewContent>
-                  <MenuBox>
-                    {review.title ? (
-                      review.title
-                        .split(",")
-                        .map((title, idx) => <Menu key={idx}>{title}</Menu>)
-                    ) : (
-                      <Menu>메뉴 정보 없음</Menu>
-                    )}
-                  </MenuBox>
-                  <Review>{review.comment}</Review>
-                </ReviewContent>
-              </ReviewBox>
-            ))
-          ) : (
-            <></>
-          )}
-        </BoxBottom>
-      </SideBox>
-      {/* </ScrollContainer> */}
+              <Writeimg
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setReviewUiState(true);
+                }}
+              />
+              <WriteBtn
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setReviewUiState(true);
+                }}
+              >
+                리뷰 쓰기
+              </WriteBtn>
+            </ReviewTop>
+            {Array.isArray(data) && data.length > 0 ? (
+              data.map((review, index) => (
+                <ReviewBox key={index}>
+                  <UserInfo>
+                    <UserChar>
+                      {<img src={review.reviewUserImage} alt="Character" />}
+                    </UserChar>
+                    <UserBox>
+                      <UserName>{review.reviewerName}</UserName>
+                      <UserId>{review.reviewerNickName}</UserId>
+                    </UserBox>
+                  </UserInfo>
+                  <ReviewInfo>
+                    <Fire>불점 {review.reviewSpicyLevel}개</Fire>
+                  </ReviewInfo>
+                  <ReviewContent>
+                    <MenuBox>
+                      {review.title ? (
+                        review.title
+                          .split(",")
+                          .map((title, idx) => <Menu key={idx}>{title}</Menu>)
+                      ) : (
+                        <Menu>메뉴 정보 없음</Menu>
+                      )}
+                    </MenuBox>
+                    <Review>{review.comment}</Review>
+                  </ReviewContent>
+                </ReviewBox>
+              ))
+            ) : (
+              <></>
+            )}
+          </BoxBottom>
+        </SideBox>
+      </ScrollContainer>
       {/* </Sidebar> */}
     </>
   );

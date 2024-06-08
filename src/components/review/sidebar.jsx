@@ -33,7 +33,7 @@ const Side = styled.div`
 
 const OpenBtn = styled.button`
   position: relative;
-  left: 500px;
+  left: 300px;
   top: 45%;
   width: 20px;
   height: 40px;
